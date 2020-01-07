@@ -5,8 +5,8 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://t.hjcpay.com:3306/park?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
-    username: root
-    password: xd123
+    username:
+    password:
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
