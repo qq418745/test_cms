@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjc.cms.dao.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.hjc.cms.bean.pojo.TbOrder" >
+    <id column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="park_id" property="parkId" jdbcType="VARCHAR" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="INTEGER" />
+    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
+    <result column="notify_status" property="notifyStatus" jdbcType="INTEGER" />
+    <result column="pay_flag" property="payFlag" jdbcType="INTEGER" />
+    <result column="watch_id" property="watchId" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="NUMERIC" />
+    <result column="s_id" property="sId" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="open_id_for_owner" property="openIdForOwner" jdbcType="VARCHAR" />
+    <result column="enter_time" property="enterTime" jdbcType="VARCHAR" />
+    <result column="time_stamp" property="timeStamp" jdbcType="TIMESTAMP" />
+    <result column="discount_type" property="discountType" jdbcType="INTEGER" />
+    <result column="discount_fee" property="discountFee" jdbcType="INTEGER" />
+    <result column="discount_detail" property="discountDetail" jdbcType="VARCHAR" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <!--<result column="apply_status" property="applyStatus" jdbcType="INTEGER" />-->
+    <result column="due_time" property="dueTime" jdbcType="VARCHAR" />
+    <result column="bill_id" property="billId" jdbcType="VARCHAR" />
+  </resultMap>
+
+ <select id="findAll" resultMap="BaseResultMap">
+   select * from t_order limit 1,24
+  </select>
+
+</mapper>

@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    url: jdbc:mysql://t.hjcpay.com:3306/park?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+    username: root
+    password: xd123
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+# 定位模板的目录
+  thymeleaf:
+    prefix: classpath:/templates/
+    # 给返回的页面添加后缀名
+    suffix: .html
+    servlet:
+      content-type: text/html
+    mode: HTML5
+
+
+
+mybatis:
+  config-location: classpath:mybatis_config.xml
+  mapper-locations: classpath:com/hjc/cms/dao/mapper/*Mapper.xml
+  type-aliases-package: com.shangguan.mybatis.entity

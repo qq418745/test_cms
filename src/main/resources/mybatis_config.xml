@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--<plugins>-->
+		<!--&lt;!&ndash; com.github.pagehelper 为 PageHelper 类所在包名 &ndash;&gt;-->
+		<!--<plugin interceptor="com.github.pagehelper.PageHelper">-->
+			<!--&lt;!&ndash; 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL 六种数据库&ndash;&gt;-->
+			<!--<property name="dialect" value="mysql"/>-->
+		<!--</plugin>-->
+	<!--</plugins>-->
+
+	<!--&lt;!&ndash; 数据库连接池 &ndash;&gt;-->
+	<!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"-->
+		  <!--destroy-method="close">-->
+		<!--<property name="url" value="${jdbc.url}" />-->
+		<!--<property name="username" value="${jdbc.username}" />-->
+		<!--<property name="password" value="${jdbc.password}" />-->
+		<!--<property name="driverClassName" value="${jdbc.driver}" />-->
+		<!--<property name="maxActive" value="10" />-->
+		<!--<property name="minIdle" value="5" />-->
+	<!--</bean>-->
+
+	<!--&lt;!&ndash; 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 &ndash;&gt;-->
+	<!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+		<!--&lt;!&ndash; 数据库连接池 &ndash;&gt;-->
+		<!--<property name="dataSource" ref="dataSource" />-->
+		<!--&lt;!&ndash; 加载mybatis的全局配置文件 &ndash;&gt;-->
+		<!--<property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" />-->
+	<!--</bean>-->
+	<!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+		<!--<property name="basePackage" value="com.pinyougou.mapper" />-->
+	<!--</bean>-->
+</configuration>

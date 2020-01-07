@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>汇九川运营管理后台 | 登陆</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/adminLTEPlugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="plugins/adminLTEPlugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="plugins/adminLTE/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="index.html"><b>汇九川运营平台</b> </a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg"></p>
+
+            <form action="/login-check" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">
+                                记住密码
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-secondary">立即登陆</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <span style="color: #dc3545" id="loginInfo">用户名或密码错误</span>
+            <div class="social-auth-links text-center mb-3">
+                <p>- 或 -</p>
+                <!--<a href="#" class="btn btn-block btn-primary">-->
+                <!--<i class="fab fa-qq mr-2"></i> QQ登陆-->
+                <!--</a>-->
+                <a href="#" class="btn btn-block btn-success">
+                    <i class="fab fa-weixin mr-2"></i> 二维码登陆
+                </a>
+            </div>
+            <!-- /.social-auth-links -->
+
+            <p class="mb-1">
+                <a href="#">忘记密码?</a>
+            </p>
+            <p class="mb-0">
+                <a href="#" class="text-center">Register a new membership</a>
+            </p>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="plugins/adminLTEPlugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/adminLTEPlugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="plugins/adminLTE/js/adminlte.min.js"></script>
+
+<script>
+    $("#loginInfo").hide();
+
+    if (location.href.indexOf("error=true") > 0) {
+        $("#loginInfo").show();
+    }
+
+
+    $("form").submit(function (e) {
+        if ($("#username").val().length === 0 || $("#password").val().length === 0) {
+            e.preventDefault();
+            alert("请输入用户名和密码!");
+        }
+    });
+
+
+
+
+</script>
+</body>
+
+</html>
