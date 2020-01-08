@@ -1,23 +1,24 @@
 package com.hjc.cms.service;
 import com.hjc.cms.bean.entity.PageResult;
-import com.hjc.cms.bean.pojo.TbOrder;
+import com.hjc.cms.bean.pojo.TOrder;
 
 import java.util.List;
 
 
 
 /**
- * 服务层接口
- * @author Administrator
- *
- */
+ * @program: hjc_cms
+ * @description:
+ * @author: Mr.liuchengming
+ * @create: 2020-01-03 10:35
+ **/
 public interface OrderService {
 
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
-	public List<TbOrder> findAll();
+	public List<TOrder> findAll();
 	
 	
 	/**
@@ -30,13 +31,13 @@ public interface OrderService {
 	/**
 	 * 增加
 	*/
-	public void add(TbOrder order);
+	public void add(TOrder order);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(TbOrder order);
+	public void update(TOrder order);
 	
 
 	/**
@@ -44,21 +45,21 @@ public interface OrderService {
 	 * @param id
 	 * @return
 	 */
-	public TbOrder findOne(Long id);
+	public TOrder findOne(String id);
 	
 	
 	/**
 	 * 批量删除
 	 * @param ids
 	 */
-	public void delete(Long[] ids);
+	public void delete(String[] ids);
 
 	/**
-	 * 分页
+	 * 分
 	 * @param pageNum 当前页 码
 	 * @param pageSize 每页记录数
 	 * @return
 	 */
-	public PageResult findPage(TbOrder order, int pageNum, int pageSize);
+	public PageResult findPage(TOrder order, int pageNum, int pageSize);
 	
 }

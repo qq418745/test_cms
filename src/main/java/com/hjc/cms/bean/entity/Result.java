@@ -3,10 +3,12 @@ package com.hjc.cms.bean.entity;
 import java.io.Serializable;
 
 /**
- * 用于向页面传递信息的类
- * @author jt
- *
- */
+ * @program: hjc_cms
+ * @description: 用于向页面传递信息的类
+ * @author: Mr.liuchengming
+ * @create: 2020-01-03 10:35
+ **/
+
 public class Result implements Serializable{
 	
 	private boolean success;

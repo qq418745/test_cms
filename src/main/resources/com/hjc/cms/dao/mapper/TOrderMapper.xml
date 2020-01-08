@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjc.cms.dao.mapper.TOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hjc.cms.bean.pojo.TOrder" >
+    <id column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="INTEGER" />
+    <result column="pay_status" property="payStatus" jdbcType="SMALLINT" />
+    <result column="notify_status" property="notifyStatus" jdbcType="SMALLINT" />
+    <result column="pay_flag" property="payFlag" jdbcType="SMALLINT" />
+    <result column="watch_id" property="watchId" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="TINYINT" />
+    <result column="s_id" property="sId" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="open_id_for_owner" property="openIdForOwner" jdbcType="VARCHAR" />
+    <result column="enter_time" property="enterTime" jdbcType="VARCHAR" />
+    <result column="time_stamp" property="timeStamp" jdbcType="TIMESTAMP" />
+    <result column="discount_type" property="discountType" jdbcType="INTEGER" />
+    <result column="discount_fee" property="discountFee" jdbcType="INTEGER" />
+    <result column="discount_detail" property="discountDetail" jdbcType="VARCHAR" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="apply_status" property="applyStatus" jdbcType="INTEGER" />
+    <result column="due_time" property="dueTime" jdbcType="VARCHAR" />
+    <result column="bill_id" property="billId" jdbcType="VARCHAR" />
+
+    <association property="tPark" column="park_id" javaType="com.hjc.cms.bean.pojo.TPark">
+      <id  column="park_id" property="parkId"  />
+      <result column="park_name"  property="parkName"  />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    out_trade_no, trade_no, car_number, total_fee, pay_status, notify_status,
+    pay_flag, watch_id, car_type, s_id, openid, open_id_for_owner, enter_time, time_stamp, 
+    discount_type, discount_fee, discount_detail, card_id, apply_status, due_time, bill_id, t_order.park_id , park_name
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hjc.cms.bean.pojo.TOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order  left join t_park on t_order.park_id = t_park.park_id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_order
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hjc.cms.bean.pojo.TOrderExample" >
+    delete from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hjc.cms.bean.pojo.TOrder" >
+    insert into t_order (out_trade_no, trade_no, park_id, 
+      car_number, total_fee, pay_status, 
+      notify_status, pay_flag, watch_id, 
+      car_type, s_id, openid, 
+      open_id_for_owner, enter_time, time_stamp, 
+      discount_type, discount_fee, discount_detail, 
+      card_id, apply_status, due_time, 
+      bill_id)
+    values (#{outTradeNo,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{parkId,jdbcType=VARCHAR}, 
+      #{carNumber,jdbcType=VARCHAR}, #{totalFee,jdbcType=INTEGER}, #{payStatus,jdbcType=SMALLINT}, 
+      #{notifyStatus,jdbcType=SMALLINT}, #{payFlag,jdbcType=SMALLINT}, #{watchId,jdbcType=VARCHAR}, 
+      #{carType,jdbcType=TINYINT}, #{sId,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+      #{openIdForOwner,jdbcType=VARCHAR}, #{enterTime,jdbcType=VARCHAR}, #{timeStamp,jdbcType=TIMESTAMP}, 
+      #{discountType,jdbcType=INTEGER}, #{discountFee,jdbcType=INTEGER}, #{discountDetail,jdbcType=VARCHAR}, 
+      #{cardId,jdbcType=VARCHAR}, #{applyStatus,jdbcType=INTEGER}, #{dueTime,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjc.cms.bean.pojo.TOrder" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="parkId != null" >
+        park_id,
+      </if>
+      <if test="carNumber != null" >
+        car_number,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="notifyStatus != null" >
+        notify_status,
+      </if>
+      <if test="payFlag != null" >
+        pay_flag,
+      </if>
+      <if test="watchId != null" >
+        watch_id,
+      </if>
+      <if test="carType != null" >
+        car_type,
+      </if>
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="openIdForOwner != null" >
+        open_id_for_owner,
+      </if>
+      <if test="enterTime != null" >
+        enter_time,
+      </if>
+      <if test="timeStamp != null" >
+        time_stamp,
+      </if>
+      <if test="discountType != null" >
+        discount_type,
+      </if>
+      <if test="discountFee != null" >
+        discount_fee,
+      </if>
+      <if test="discountDetail != null" >
+        discount_detail,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="applyStatus != null" >
+        apply_status,
+      </if>
+      <if test="dueTime != null" >
+        due_time,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null" >
+        #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null" >
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="notifyStatus != null" >
+        #{notifyStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payFlag != null" >
+        #{payFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="watchId != null" >
+        #{watchId,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        #{carType,jdbcType=TINYINT},
+      </if>
+      <if test="sId != null" >
+        #{sId,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="openIdForOwner != null" >
+        #{openIdForOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null" >
+        #{enterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountType != null" >
+        #{discountType,jdbcType=INTEGER},
+      </if>
+      <if test="discountFee != null" >
+        #{discountFee,jdbcType=INTEGER},
+      </if>
+      <if test="discountDetail != null" >
+        #{discountDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        #{applyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="dueTime != null" >
+        #{dueTime,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hjc.cms.bean.pojo.TOrderExample" resultType="java.lang.Integer" >
+    select count(*) from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order
+    <set >
+      <if test="record.outTradeNo != null" >
+        out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeNo != null" >
+        trade_no = #{record.tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkId != null" >
+        park_id = #{record.parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNumber != null" >
+        car_number = #{record.carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="record.payStatus != null" >
+        pay_status = #{record.payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.notifyStatus != null" >
+        notify_status = #{record.notifyStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.payFlag != null" >
+        pay_flag = #{record.payFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.watchId != null" >
+        watch_id = #{record.watchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carType != null" >
+        car_type = #{record.carType,jdbcType=TINYINT},
+      </if>
+      <if test="record.sId != null" >
+        s_id = #{record.sId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null" >
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openIdForOwner != null" >
+        open_id_for_owner = #{record.openIdForOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterTime != null" >
+        enter_time = #{record.enterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeStamp != null" >
+        time_stamp = #{record.timeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.discountType != null" >
+        discount_type = #{record.discountType,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountFee != null" >
+        discount_fee = #{record.discountFee,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountDetail != null" >
+        discount_detail = #{record.discountDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardId != null" >
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyStatus != null" >
+        apply_status = #{record.applyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueTime != null" >
+        due_time = #{record.dueTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null" >
+        bill_id = #{record.billId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order
+    set out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+      trade_no = #{record.tradeNo,jdbcType=VARCHAR},
+      park_id = #{record.parkId,jdbcType=VARCHAR},
+      car_number = #{record.carNumber,jdbcType=VARCHAR},
+      total_fee = #{record.totalFee,jdbcType=INTEGER},
+      pay_status = #{record.payStatus,jdbcType=SMALLINT},
+      notify_status = #{record.notifyStatus,jdbcType=SMALLINT},
+      pay_flag = #{record.payFlag,jdbcType=SMALLINT},
+      watch_id = #{record.watchId,jdbcType=VARCHAR},
+      car_type = #{record.carType,jdbcType=TINYINT},
+      s_id = #{record.sId,jdbcType=VARCHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      open_id_for_owner = #{record.openIdForOwner,jdbcType=VARCHAR},
+      enter_time = #{record.enterTime,jdbcType=VARCHAR},
+      time_stamp = #{record.timeStamp,jdbcType=TIMESTAMP},
+      discount_type = #{record.discountType,jdbcType=INTEGER},
+      discount_fee = #{record.discountFee,jdbcType=INTEGER},
+      discount_detail = #{record.discountDetail,jdbcType=VARCHAR},
+      card_id = #{record.cardId,jdbcType=VARCHAR},
+      apply_status = #{record.applyStatus,jdbcType=INTEGER},
+      due_time = #{record.dueTime,jdbcType=VARCHAR},
+      bill_id = #{record.billId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjc.cms.bean.pojo.TOrder" >
+    update t_order
+    <set >
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null" >
+        park_id = #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null" >
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="notifyStatus != null" >
+        notify_status = #{notifyStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payFlag != null" >
+        pay_flag = #{payFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="watchId != null" >
+        watch_id = #{watchId,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        car_type = #{carType,jdbcType=TINYINT},
+      </if>
+      <if test="sId != null" >
+        s_id = #{sId,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="openIdForOwner != null" >
+        open_id_for_owner = #{openIdForOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null" >
+        enter_time = #{enterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        time_stamp = #{timeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountType != null" >
+        discount_type = #{discountType,jdbcType=INTEGER},
+      </if>
+      <if test="discountFee != null" >
+        discount_fee = #{discountFee,jdbcType=INTEGER},
+      </if>
+      <if test="discountDetail != null" >
+        discount_detail = #{discountDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        apply_status = #{applyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="dueTime != null" >
+        due_time = #{dueTime,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjc.cms.bean.pojo.TOrder" >
+    update t_order
+    set trade_no = #{tradeNo,jdbcType=VARCHAR},
+      park_id = #{parkId,jdbcType=VARCHAR},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=INTEGER},
+      pay_status = #{payStatus,jdbcType=SMALLINT},
+      notify_status = #{notifyStatus,jdbcType=SMALLINT},
+      pay_flag = #{payFlag,jdbcType=SMALLINT},
+      watch_id = #{watchId,jdbcType=VARCHAR},
+      car_type = #{carType,jdbcType=TINYINT},
+      s_id = #{sId,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      open_id_for_owner = #{openIdForOwner,jdbcType=VARCHAR},
+      enter_time = #{enterTime,jdbcType=VARCHAR},
+      time_stamp = #{timeStamp,jdbcType=TIMESTAMP},
+      discount_type = #{discountType,jdbcType=INTEGER},
+      discount_fee = #{discountFee,jdbcType=INTEGER},
+      discount_detail = #{discountDetail,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      apply_status = #{applyStatus,jdbcType=INTEGER},
+      due_time = #{dueTime,jdbcType=VARCHAR},
+      bill_id = #{billId,jdbcType=VARCHAR}
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

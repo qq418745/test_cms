@@ -2,11 +2,19 @@ server:
   port: 8080
   servlet:
     context-path: /
+
+
 spring:
+#  mvc:
+#    pathmatch:
+#      use-suffix-pattern: false
+#      use-registered-suffix-pattern: true
+#    contentnegotiation:
+#      favor-path-extension: false
   datasource:
     url: jdbc:mysql://t.hjcpay.com:3306/park?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
-    username:
-    password:
+    username: root
+    password: xd123
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

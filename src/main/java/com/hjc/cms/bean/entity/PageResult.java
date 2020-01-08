@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分页返回的实体类
- * @author jt
- *
- */
+ * @program: hjc_cms
+ * @description:分页返回的实体类
+ * @author: Mr.liuchengming
+ * @create: 2020-01-05 10:35
+ **/
+
 public class PageResult implements Serializable{
 	private long total; // 总记录数
 	private List rows; // 返回每页的数据的集合

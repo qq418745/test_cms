@@ -1,4 +1,10 @@
 package com.hjc.cms;
+/**
+ * @program: hjc_cms
+ * @description:
+ * @author: Mr.liuchengming
+ * @create: 2020-01-03 10:35
+ **/
 
 public interface IConst {
     String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";

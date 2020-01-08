@@ -1,4 +1,8 @@
-app.controller("baseController",function($scope){
+<!--
+        * author: Mr.liuchengming
+        * create: 2020-01-03 10:35
+       -->
+app.controller("baseController",function($scope,$sce){
 	// 分页的配置的信息
 	$scope.paginationConf = {
 		 currentPage: 1, // 当前页数
@@ -11,9 +15,14 @@ app.controller("baseController",function($scope){
 	}; 
 	
 	$scope.reloadList = function(){
-		// $scope.findByPage($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
-		$scope.search($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+		//$scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+		 $scope.search($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
 	}
+
+      //方法返回内容解析位 html
+    trustHtml =function(input){
+        return $sce.trustAsHtml(input);
+    };
 	
 	// 定义一个数组:
 	$scope.selectIds = [];
