@@ -13,8 +13,8 @@ spring:
 #      favor-path-extension: false
   datasource:
     url: jdbc:mysql://t.hjcpay.com:3306/park?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
-    username: root
-    password: xd123
+    username:
+    password:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 10
