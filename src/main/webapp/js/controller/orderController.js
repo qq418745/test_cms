@@ -1,8 +1,3 @@
-<!--
-        * author: Mr.liuchengming
-        * create: 2020-01-03 10:35
-       -->
-
 //控制层
 app.controller('orderController' ,function($scope,$controller,orderService){
 	

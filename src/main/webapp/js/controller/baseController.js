@@ -1,7 +1,3 @@
-<!--
-        * author: Mr.liuchengming
-        * create: 2020-01-03 10:35
-       -->
 app.controller("baseController",function($scope,$sce){
 	// 分页的配置的信息
 	$scope.paginationConf = {

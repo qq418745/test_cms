@@ -1,9 +1,3 @@
-
-<!--
-        * author: Mr.liuchengming
-        * create: 2020-01-03 10:35
-       -->
-
 // 定义模块:
 var app = angular.module("cms",['pagination' , 'ngSanitize']);
 

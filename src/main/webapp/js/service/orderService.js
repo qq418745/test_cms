@@ -1,9 +1,3 @@
-
-<!--
-        * author: Mr.liuchengming
-        * create: 2020-01-03 10:35
-       -->
-
 //服务层
 app.service('orderService',function($http){
 	    	
