@@ -46,20 +46,18 @@ public interface OrderService {
 	 * @return
 	 */
 	public TOrder findOne(String id);
-	
-	
-	/**
-	 * 批量删除
-	 * @param ids
-	 */
-	public void delete(String[] ids);
 
 	/**
-	 * 分
+	 * 分页
 	 * @param pageNum 当前页 码
 	 * @param pageSize 每页记录数
 	 * @return
 	 */
-	public PageResult findPage(TOrder order, int pageNum, int pageSize);
-	
+	public PageResult findPage(TOrder order,String startTimeStamp ,String outTimeStamp,int pageNum, int pageSize,String[] parkIds);
+
+
+	/**
+	 * 查询报表接口
+	 */
+	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,int pageNum, int pageSize);
 }

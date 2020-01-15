@@ -27,7 +27,11 @@ app.service('orderService',function($http){
 		return $http.get('../order/delete?ids='+ids);
 	}
 	//搜索
-	this.search=function(page,rows,searchEntity){
-		return $http.post('../order/search?page='+page+"&rows="+rows, searchEntity);
-	}    	
+	this.search=function(page,rows,startTimeStamp,outTimeStamp,searchEntity){
+		return $http.post('../order/search?page='+page+"&rows="+rows+"&startTimeStamp="+startTimeStamp+"&outTimeStamp="+outTimeStamp, searchEntity,config);
+	};
+
+    var config = {
+        headers: { 'Content-Type': 'application/json' }
+    };
 });

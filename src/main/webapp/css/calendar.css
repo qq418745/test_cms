@@ -1,0 +1,291 @@
+/*--css 初始化-- */
+
+@charset "utf-8";
+a,
+address,
+b,
+big,
+blockquote,
+body,
+center,
+cite,
+code,
+dd,
+del,
+div,
+dl,
+dt,
+em,
+fieldset,
+font,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+i,
+iframe,
+img,
+ins,
+label,
+legend,
+li,
+ol,
+p,
+pre,
+small,
+span,
+strong,
+u,
+ul,
+var,
+button,
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+}
+fieldset,
+img,
+input,
+button {
+  border: none;
+  outline-style: none;
+}
+ul,
+ol {
+  list-style: none;
+}
+input {
+  font-family: 'Helvetica', 'Microsoft YaHei';
+  font-size: 14px;
+}
+select,
+input {
+  vertical-align: middle;
+}
+select,
+input,
+textarea {
+  font-size: 14px;
+  outline: none;
+}
+
+/*--防止拖动--*/
+
+textarea {
+  resize: none;
+}
+
+/*--去掉图片低测默认的3像素空白缝隙--*/
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+table {
+  border-collapse: collapse;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 100%;
+}
+s,
+i,
+em {
+  font-style: normal;
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/*--解决button在firefox下文字不能上下居中的问题--*/
+
+button::-moz-focus-inner {
+  margin: 0;
+  padding: 0px 0 2px;
+  border: none;
+}
+body {
+  font-family: 'Helvetica', 'Microsoft YaHei';
+  font-size: 14px;
+  color: #666;
+  background-color: #f3f3f4;
+}
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* demo */
+.demo-box {
+  width: 100%;
+  height: auto;
+  border: #ccc 1px solid;
+}
+.demo-header {
+  padding: 10px;
+}
+.demo-content {
+  padding: 20px;
+}
+
+.calendar {
+  display: none;
+  position: absolute;
+  width: 340px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 2px 2px 15px 2px #e3e3e3;
+}
+.calendar-header {
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+}
+.calendar-header i {
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+.calendar-header i.calendar-pre {
+  left: 0;
+}
+.calendar-header i.calendar-next {
+  right: 0;
+}
+.calendar-header i:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: '';
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  margin-left: -5px;
+  border-top: #ccc 2px solid;
+  border-left: #ccc 2px solid;
+}
+.calendar-pre:after {
+  transform: rotateZ(-45deg);
+}
+.calendar-next:after {
+  transform: rotateZ(135deg);
+}
+
+.calendar-week,
+.calendar-days {
+  font-size: 0;
+}
+.calendar-week p,
+.calendar-days li {
+  display: inline-block;
+  width: 14.28571%;
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.date-default {
+  color: #ccc;
+}
+.calendar-days li.active {
+  background-color: #1890ff;
+  color: #fff;
+}
+.datepicker {
+  position: relative;
+  width: 240px;
+  margin: auto;
+  border: #ccc 1px solid;
+}
+.datepicker input {
+  width: 100%;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 40px;
+}
+.clendar-main {
+  position: relative;
+}
+.time {
+  width: 70px;
+  background-color: #1890ff;
+  text-align: center;
+  line-height: 26px;
+  color: #fff;
+  cursor: pointer;
+}
+.calendar-time {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.calendar-time > ul {
+  float: left;
+  width: 33.33333%;
+  height: 100%;
+  padding-top: 20px;
+  text-align: center;
+  overflow-y: auto;
+}
+.calendar-time li {
+  line-height: 24px;
+  cursor: pointer;
+}
+.calendar-time li:hover {
+  color: #fff;
+  background-color: #116ec3;
+}
+.calendar-time li.active {
+  color: #fff;
+  background-color: #1890ff;
+}
+.calendar-bottom {
+  padding-top: 10px;
+  overflow: hidden;
+}
+.time-show {
+  float: left;
+}
+.calendar-button {
+  float: right;
+}
+.calendar-button button {
+  width: 50px;
+  height: 26px;
+  margin-left: 5px;
+  font-size: 12px;
+  color: #fff;
+  background-color: #1890ff;
+  cursor: pointer;
+}

@@ -30,4 +30,8 @@
 	<!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
 		<!--<property name="basePackage" value="com.pinyougou.mapper" />-->
 	<!--</bean>-->
+	<typeAliases>
+		<package name="com.hjc.cms.bean.entity"/>
+		<package name="com.hjc.cms.bean.pojo"/>
+	</typeAliases>
 </configuration>

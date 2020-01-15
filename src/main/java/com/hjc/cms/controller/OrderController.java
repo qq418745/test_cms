@@ -1,7 +1,8 @@
 package com.hjc.cms.controller;
 
+import com.hjc.cms.IConst;
+import com.hjc.cms.bean.User;
 import com.hjc.cms.bean.entity.PageResult;
-import com.hjc.cms.bean.entity.Result;
 import com.hjc.cms.bean.pojo.TOrder;
 import com.hjc.cms.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 /**
  * @program: hjc_cms
@@ -19,66 +19,12 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("order")
-public class OrderController {
+public class OrderController  extends  BaseController implements IConst  {
 
      @Autowired
      OrderService orderService;
-
-    /**
-     * 返回全部列表
-     * @return
-     */
-    @RequestMapping("/findAll")
-    public List<TOrder> findAll(){
-        return orderService.findAll();
-    }
-
-
-    /**
-     * 返回全部列表
-     * @return
-     */
-    @RequestMapping("/findPage")
-    public PageResult  findPage(int page,int rows){
-        return orderService.findPage(page, rows);
-    }
-
-    /**
-     * 增加
-     * @param order
-     * @return
-     */
-    @RequestMapping("/add")
-    public Result add(@RequestBody TOrder order){
-        try {
-            orderService.add(order);
-            return new Result(true, "增加成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "增加失败");
-        }
-    }
-
-    /**
-     * 修改
-     * @param order
-     * @return
-     */
-    @RequestMapping("/update")
-    public Result update(@RequestBody TOrder order){
-        try {
-            orderService.update(order);
-            return new Result(true, "修改成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "修改失败");
-        }
-    }
-
     /**
      * 获取实体
-     * @param id
-     * @return
      */
     @RequestMapping("/findOne")
     public TOrder findOne(String id){
@@ -86,31 +32,22 @@ public class OrderController {
     }
 
     /**
-     * 批量删除
-     * @param ids
-     * @return
+     * 查询+分页
      */
-    @RequestMapping("/delete")
-    public Result delete(String [] ids){
-        try {
-            orderService.delete(ids);
-      return new Result(true, "删除成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "删除失败");
-        }
+    @RequestMapping("/search")
+    public PageResult search(@RequestBody TOrder order,String startTimeStamp,String outTimeStamp, int page, int rows  ) throws Exception {
+
+        return orderService.findPage(order,startTimeStamp,outTimeStamp, page, rows,currentUserParkIds());
     }
 
     /**
-     * 查询+分页
-     * @param order
-     * @param page
-     * @param rows
-     * @return
+     * 日月年报表查询+分页
+     * exportType  报表类型  1 = 日报 2 = 月报  3 = 年报
      */
-    @RequestMapping("/search")
-    public PageResult search(@RequestBody TOrder order, int page, int rows  ){
-        return orderService.findPage(order, page, rows);
+    @RequestMapping("/get-report-data")
+    public PageResult getReportData(@RequestBody TOrder tOrder,String startTimeStamp , String outTimeStamp,Integer exportType,int[] payFlags,int page, int rows){
+        PageResult report = orderService.findReport(tOrder, startTimeStamp, outTimeStamp, exportType, payFlags,page, rows);
+        return  report;
     }
 
 }

@@ -30,7 +30,7 @@
     </association>
   </resultMap>
   <sql id="Example_Where_Clause" >
-    <where >
+
       <foreach collection="oredCriteria" item="criteria" separator="or" >
         <if test="criteria.valid" >
           <trim prefix="(" suffix=")" prefixOverrides="and" >
@@ -55,8 +55,9 @@
             </foreach>
           </trim>
         </if>
-      </foreach>
-    </where>
+
+</foreach>
+
   </sql>
   <sql id="Update_By_Example_Where_Clause" >
     <where >
@@ -101,12 +102,88 @@
     <include refid="Base_Column_List" />
     from t_order  left join t_park on t_order.park_id = t_park.park_id
     <if test="_parameter != null" >
+      <where>
+        <if test="parkIds != null" >
+          and t_park.park_id in
+          <foreach item="parkId" collection="parkIds" open="(" separator="," close=")">
+            #{parkId}
+          </foreach>
+        </if>
+
       <include refid="Example_Where_Clause" />
+
+        <if test="parkId != null" >
+          or t_park.park_id like  #{parkId}
+        </if>
+        <if test="startTimeStamp != null" >
+          and UNIX_TIMESTAMP(time_stamp)  &gt;=  UNIX_TIMESTAMP(#{startTimeStamp})
+        </if>
+        <if test="outTimeStamp != null" >
+          and UNIX_TIMESTAMP(time_stamp)  &lt;=   UNIX_TIMESTAMP(#{outTimeStamp})
+        </if>
+    </where>
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectReportSumCountByExample"  resultType="OrderReportCount"   parameterType="TOrderExample">
+      select  date(time_stamp) as day,
+              sum(total_fee) as sumTotalFee,
+              sum(discount_fee) as sumDiscountFee ,
+              count(*) as count
+      from    t_order
+
+
+    <if test="_parameter != null">
+        <where>
+          <include refid="Example_Where_Clause" />
+          <if test="payFlags != null">
+            and  pay_flag in
+             <foreach collection="payFlags" item="payFlag" separator="," open="(" close=")">
+              #{payFlag}
+             </foreach>
+          </if>
+          <if test="startTimeStamp != null">
+            and  UNIX_TIMESTAMP(time_stamp) &gt;=  UNIX_TIMESTAMP(startTimeStamp)
+          </if>
+          <if test="outTimeStamp != null">
+            and  UNIX_TIMESTAMP(time_stamp) &lt;=  UNIX_TIMESTAMP(outTimeStamp)
+          </if>
+        </where>
+    </if>
+    group by date(time_stamp)
+    order by  time_stamp DESC
+
+  </select>
+
+    <select id="selectSumReportYLByExample"    parameterType="TOrderExample">
+      select
+        sum(total_fee) as sumTotalFee,
+        sum(discount_fee) as sumDiscountFee ,
+        count(*) as count
+      from    t_order
+      <if test="_parameter != null">
+        <where>
+          <include refid="Example_Where_Clause" />
+
+          <if test="startTimeStamp != null">
+            and  UNIX_TIMESTAMP(time_stamp) &gt;=  UNIX_TIMESTAMP(startTimeStamp)
+          </if>
+          <if test="outTimeStamp != null">
+            and  UNIX_TIMESTAMP(time_stamp) &lt;=  UNIX_TIMESTAMP(outTimeStamp)
+          </if>
+
+        </where>
+      </if>
+      /*group by day(time_stamp)*/
+</select>
+    <!--<select id="selectSumReportWerXinAndAliByExample"    parameterType="com.hjc.cms.bean.pojo.TOrderExample">-->
+
+    <!--</select>-->
+    <!--<select id="selectSumReportOtherChannelsByExample"    parameterType="com.hjc.cms.bean.pojo.TOrderExample">-->
+
+    <!--</select>-->
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -281,12 +358,14 @@
       </if>
     </trim>
   </insert>
+
   <select id="countByExample" parameterType="com.hjc.cms.bean.pojo.TOrderExample" resultType="java.lang.Integer" >
     select count(*) from t_order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update t_order
     <set >

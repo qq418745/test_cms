@@ -8,9 +8,8 @@ import java.util.Date;
 import static com.hjc.cms.IConst.DEFAULT_TIME_PATTERN;
 /**
  * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-03 12:35
+ * Mr.liuchengming
+ * 2020-01-03 12:35
  **/
 public class TOrder {
     private String outTradeNo;
@@ -40,6 +39,7 @@ public class TOrder {
 
     private String openIdForOwner;
 
+    @JsonFormat(pattern = DEFAULT_TIME_PATTERN, timezone = "GMT+8")
     private String enterTime;
     @JsonFormat(pattern = DEFAULT_TIME_PATTERN, timezone = "GMT+8")
     private Date timeStamp;
@@ -232,6 +232,14 @@ public class TOrder {
     }
 
     public void setTPark(TPark tPark) {
+        this.tPark = tPark;
+    }
+
+    public TPark gettPark() {
+        return tPark;
+    }
+
+    public void settPark(TPark tPark) {
         this.tPark = tPark;
     }
 

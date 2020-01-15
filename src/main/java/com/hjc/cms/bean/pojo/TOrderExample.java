@@ -1,20 +1,71 @@
 package com.hjc.cms.bean.pojo;
 
+
+
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-03 10:35
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-03 10:35
  **/
 public class TOrderExample {
     protected String orderByClause;
 
     protected boolean distinct;
-
     protected List<Criteria> oredCriteria;
+   //扩展参数 parkId
+    protected   String parkId = null;
+    //扩展参数 parkId
+    protected   String[] parkIds = null;
+    //扩展参数 startTimeStamp
+    protected   String startTimeStamp = null;
+    //扩展参数 outTimeStamp
+    protected   String outTimeStamp = null ;
+    protected   int[] payFlags = null ;
+
+    public int[] getPayFlags() {
+        return payFlags;
+    }
+
+    public void setPayFlags(int[] payFlags) {
+        this.payFlags = payFlags;
+    }
+
+    public String[] getParkIds() {
+        return parkIds;
+    }
+
+    public void setParkIds(String[] parkIds) {
+        this.parkIds = parkIds;
+    }
+
+    public String getStartTimeStamp() {
+        return startTimeStamp;
+    }
+
+    public void setStartTimeStamp(String startTimeStamp){
+
+        this.startTimeStamp = startTimeStamp;
+    }
+
+    public String getOutTimeStamp() {
+        return outTimeStamp;
+    }
+
+    public void setOutTimeStamp(String outTimeStamp)  {
+        this.outTimeStamp = outTimeStamp;
+    }
+
+    public void setParkId(String parkId) {
+        this.parkId = "%"+parkId+"%";
+    }
+
+    public String getParkId() {
+        return parkId;
+    }
 
     public TOrderExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -291,9 +342,15 @@ public class TOrderExample {
         }
 
         public Criteria andParkIdLike(String value) {
-            addCriterion("park_id like", value, "parkId");
+            addCriterion("t_order.park_id like", value, "parkId");
             return (Criteria) this;
         }
+        public Criteria andParkNameLike(String value) {
+            addCriterion("t_park.park_name like", value, "parkName");
+            return (Criteria) this;
+        }
+
+
 
         public Criteria andParkIdNotLike(String value) {
             addCriterion("park_id not like", value, "parkId");

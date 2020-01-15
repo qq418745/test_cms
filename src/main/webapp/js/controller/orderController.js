@@ -1,6 +1,6 @@
 //控制层
 app.controller('orderController' ,function($scope,$controller,orderService){
-	
+
 	$controller('baseController',{$scope:$scope});//继承
 
      //PAY_YL_WX = 3, PAY_YL_ALI = 4, PAY_YL_CLOUD = 5
@@ -22,6 +22,11 @@ app.controller('orderController' ,function($scope,$controller,orderService){
 
     $scope.notifyStatusArray  = [{name:'全部'},{id: 0, name: '未通知'},{id:1, name: '成功'},{id:2,name:'失败'}];
     $scope.notifyStatusArrayIndex = 0;
+    $scope.typeArray  = [{name:'详情'},{id: 0, name: '日报'},{id:1, name: '月报'},{id:2,name:'年报'}];
+    $scope.typeArrayIndex = 0;
+    $scope.typeSwitch=function(index){
+
+    };
     $scope.notifyStatusSwitch = function(index){
         $scope.notifyStatusArrayIndex = index;
         if(index === 0){
@@ -91,21 +96,51 @@ app.controller('orderController' ,function($scope,$controller,orderService){
 
 	$scope.searchEntity={};//定义搜索对象
 
+    $scope.searchEntity.tPark={};
+    $scope.searchEntity.tPark.parkName='';
+    $scope.searchEntity.tPark.parkId='';
+
 	//搜索分页查询
 	$scope.search=function(page,rows){
-		orderService.search(page,rows,$scope.searchEntity).success(
+	    if(isNullCharacter($scope.searchEntity.carNumber)){
+            delete  $scope.searchEntity.carNumber;
+        }
+        $scope.searchEntity.tPark.parkId = $scope.searchEntity.tPark.parkName;
+        if(isNullCharacter($scope.searchEntity.tPark.parkName)){
+            delete  $scope.searchEntity.tPark.carNumber;
+            delete  $scope.searchEntity.tPark.parkId;
+        }
+
+		orderService.search(page,rows,isBlank($('#startTimeStamp').val() ) ? "" : $('#startTimeStamp').val()+" 00:00:00",isBlank($('#outTimeStamp').val())? "":$('#outTimeStamp').val()+" 23:59:59",$scope.searchEntity).success(
 			function(response){
 				$scope.orderList=response.rows;
 				$scope.paginationConf.totalItems=response.total;//更新总记录数
 			}
 		);
-	}
+	};
 
 
 
+    $scope.autoRefreshSwitchVaule=false;
+    $scope.autoRefreshSwitch=function(){
+        $scope.autoRefreshSwitchVaule =  !  $scope.autoRefreshSwitchVaule;
+        autoRefresh();
+    };
+   autoRefresh=function(){
+       $('#autoButton').addClass("disabled");
+        if( $scope.autoRefreshSwitchVaule){
+            setTimeout(function () {
+                $scope.search(1,$scope.paginationConf.itemsPerPage);
+                autoRefresh();
+            }, 5000) //每1000毫秒执行一次
+
+
+       $('#autoButton').removeClass("disabled");
+
+
+        }
+   };
 
 
 
-
-
-});	
+});

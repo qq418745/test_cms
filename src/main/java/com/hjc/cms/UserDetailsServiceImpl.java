@@ -1,12 +1,12 @@
 package com.hjc.cms;
 
 import com.hjc.cms.bean.User;
+import com.hjc.cms.security.UserDetail;
 import com.hjc.cms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         logger.info(user.getName()+"角色权限为："+authorities.toString());
 
 
-        return new org.springframework.security.core.userdetails.User(user.getName(),user.getPassword(),authorities);
+        return new UserDetail(user.getName(),user.getPassword(),authorities,user);
 
     }
 }

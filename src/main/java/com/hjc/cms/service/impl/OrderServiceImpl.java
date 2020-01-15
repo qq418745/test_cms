@@ -1,10 +1,13 @@
 package com.hjc.cms.service.impl;
 import java.util.List;
 
+
+import com.hjc.cms.bean.entity.OrderReportCount;
 import com.hjc.cms.bean.entity.PageResult;
 import com.hjc.cms.bean.pojo.TOrder;
 import com.hjc.cms.bean.pojo.TOrderExample;
 import com.hjc.cms.dao.mapper.TOrderMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -64,32 +67,23 @@ public class OrderServiceImpl implements OrderService {
 	
 	/**
 	 * 根据ID获取实体
-	 * @param id
-	 * @return
 	 */
 	@Override
 	public TOrder findOne(String id){
 		return orderMapper.selectByPrimaryKey(id);
 	}
 
+
 	/**
-	 * 批量删除
+	 * 查询页面
 	 */
 	@Override
-	public void delete(String[] ids) {
-		for(String id:ids){
-			orderMapper.deleteByPrimaryKey(id);
-		}		
-	}
-	
-	
-		@Override
-	public PageResult findPage(TOrder order, int pageNum, int pageSize) {
+	public PageResult findPage(TOrder order, String startTimeStamp,String outTimeStamp,int pageNum, int pageSize,String[] parkIds){
 		PageHelper.startPage(pageNum, pageSize);
 		
 		TOrderExample example=new TOrderExample();
 		TOrderExample.Criteria criteria = example.createCriteria();
-		
+
 		if(order!=null){
             if(order.getNotifyStatus() !=null){
                 criteria.andNotifyStatusEqualTo(order.getNotifyStatus());
@@ -97,52 +91,61 @@ public class OrderServiceImpl implements OrderService {
             if(order.getPayStatus() != null){
                 criteria.andPayStatusEqualTo(order.getPayStatus());
             }
-
-						if(order.getOutTradeNo()!=null && order.getOutTradeNo().length()>0){
-				criteria.andOutTradeNoLike("%"+order.getOutTradeNo()+"%");
-			}
-			if(order.getTradeNo()!=null && order.getTradeNo().length()>0){
-				criteria.andTradeNoLike("%"+order.getTradeNo()+"%");
-			}
-			if(order.getTPark() != null && order.getTPark().getParkId() != null && order.getTPark().getParkId().length()>0){
-				criteria.andParkIdLike("%"+order.getTPark().getParkId()+"%");
-			}
-			if(order.getCarNumber()!=null && order.getCarNumber().length()>0){
+			if(StringUtils.isNotBlank( order.getCarNumber())){
 				criteria.andCarNumberLike("%"+order.getCarNumber()+"%");
 			}
-			if(order.getWatchId()!=null && order.getWatchId().length()>0){
-				criteria.andWatchIdLike("%"+order.getWatchId()+"%");
+
+			if(order.getTPark() != null && StringUtils.isNotBlank(order.getTPark().getParkName())){
+				criteria.andParkNameLike("%"+order.getTPark().getParkName().trim()+"%");
 			}
 
-			if(order.getSId()!=null && order.getSId().length()>0){
-				criteria.andSIdLike("%"+order.getSId()+"%");
+			if(order.getTPark() != null && StringUtils.isNotBlank(order.getTPark().getParkId())){
+				example.setParkId(order.getTPark().getParkId());
 			}
-			if(order.getOpenid()!=null && order.getOpenid().length()>0){
-				criteria.andOpenidLike("%"+order.getOpenid()+"%");
 			}
-			if(order.getOpenIdForOwner()!=null && order.getOpenIdForOwner().length()>0){
-				criteria.andOpenIdForOwnerLike("%"+order.getOpenIdForOwner()+"%");
+
+			if(StringUtils.isNotBlank(startTimeStamp )){
+				example.setStartTimeStamp(startTimeStamp);
 			}
-			if(order.getEnterTime()!=null && order.getEnterTime().length()>0){
-				criteria.andEnterTimeLike("%"+order.getEnterTime()+"%");
+			if(StringUtils.isNotBlank(outTimeStamp )){
+				example.setOutTimeStamp(outTimeStamp);
+		     }
+            if (parkIds != null){
+            	example.setParkIds(parkIds);
 			}
-			if(order.getDiscountDetail()!=null && order.getDiscountDetail().length()>0){
-				criteria.andDiscountDetailLike("%"+order.getDiscountDetail()+"%");
-			}
-			if(order.getCardId()!=null && order.getCardId().length()>0){
-				criteria.andCardIdLike("%"+order.getCardId()+"%");
-			}
-			if(order.getDueTime()!=null && order.getDueTime().length()>0){
-				criteria.andDueTimeLike("%"+order.getDueTime()+"%");
-			}
-			if(order.getBillId()!=null && order.getBillId().length()>0){
-				criteria.andBillIdLike("%"+order.getBillId()+"%");
-			}
-	
-		}
-		
+		example.setOrderByClause("time_stamp DESC");
 		Page<TOrder> page= (Page<TOrder>)orderMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	/**
+	 * 查询订单报表
+	 */
+	@Override
+	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+
+		TOrderExample example=new TOrderExample();
+		if(tOrder != null){
+		TOrderExample.Criteria criteria = example.createCriteria();
+
+		}
+		if(StringUtils.isNotBlank(startTimeStamp)){
+			example.setStartTimeStamp(startTimeStamp);
+		}
+		if(StringUtils.isNotBlank(outTimeStamp)){
+			example.setOutTimeStamp(outTimeStamp);
+		}
+		if(payFlags != null && payFlags.length > 0){
+			example.setPayFlags(payFlags);
+		}
+         //总数与银联
+		Page<OrderReportCount> page = (Page<OrderReportCount>) orderMapper.selectReportSumCountByExample(example);
+			//支付宝微信总数
+		PageHelper.startPage(pageNum, pageSize);
+		//其他总数
+
+		return new PageResult(page.getTotal(),page.getResult());
+	}
+
 }

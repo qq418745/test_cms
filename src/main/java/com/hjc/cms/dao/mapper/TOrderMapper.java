@@ -1,5 +1,6 @@
 package com.hjc.cms.dao.mapper;
 
+import com.hjc.cms.bean.entity.OrderReportCount;
 import com.hjc.cms.bean.pojo.TOrder;
 import com.hjc.cms.bean.pojo.TOrderExample;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,8 @@ public interface TOrderMapper {
     List<TOrder> selectByExample(TOrderExample example);
 
     TOrder selectByPrimaryKey(String outTradeNo);
+
+    List<OrderReportCount> selectReportSumCountByExample(TOrderExample example);
 
     int updateByExampleSelective(@Param("record") TOrder record, @Param("example") TOrderExample example);
 

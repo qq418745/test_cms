@@ -17,20 +17,32 @@
     <link rel="stylesheet" href="../plugins/adminLTE/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="../plugins/angularjs/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+    <script type="text/javascript" src="../js/controller/orderReportController.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/service/orderReportService.js"></script>
+
+    <!-- 引入分页相关的JS和CSS -->
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
 </head>
-<body class="hold-transition sidebar-mini" ng-app="cms" ng-controller="carRechargeRecordController">
+<body class="hold-transition sidebar-mini" ng-app="cms" ng-controller="orderReportController" ng-init="search(1,paginationConf.itemsPerPage)">
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>月租车充值记录</h1>
+                <h1>停车场配置</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">月租车充值记录</li>
+                    <li class="breadcrumb-item active">停车场配置</li>
                 </ol>
             </div>
         </div>
@@ -44,67 +56,42 @@
             <div class="card">
 
                 <div class="card-body">
-                    <div class="box-tools pull-right">
-                        <div class="has-feedback">
+                    <!--<div class="box-tools pull-right">-->
+                    <!--<div class="has-feedback">-->
 
-                            <button type="button" class="btn btn-secondary btn-lg">按钮</button>
-                            <button type="button" class="btn btn-secondary btn-lg">按钮</button>
+                    <!--<button type="button" class="btn btn-secondary btn-lg">新增配置</button>-->
 
-                        </div>
-                    </div>
+                    <!--</div>-->
+                    <!--</div>-->
 
-                    <table id="example2" class="table table-bordered table-striped table-head-fixed">
+                    <table id="example2" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>车牌号</th>
-                            <th>停车场名</th>
-                            <th>姓名</th>
-                            <th>地址</th>
-                            <th>电话</th>
-                            <th>组号</th>
-                            <th>车位号</th>
-                            <th>包月类型</th>
-                            <th>单价</th>
-                            <th>充值月数</th>
-                            <th>应收金额</th>
-                            <th>实收金额</th>
-                            <th>支付时间</th>
-                            <th>支付状态</th>
-                            <th>支付类型</th>
-                            <th>开始时间</th>
-                            <th>结束时间</th>
-
+                            <th>日期</th>
+                            <th>总金额</th>
+                            <th>总缴费数</th>
+                            <th>银联渠道金额</th>
+                            <th>银联渠道缴费数</th>
+                            <th>微信与支付宝渠道缴费金额</th>
+                            <th>微信与支付宝渠道缴费数</th>
+                            <th>其他渠道缴费金额</th>
+                            <th>其他渠道缴费数</th>
+                            <th>优惠</th>
+                            <!--<th class="text-center">操作</th>-->
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 4.0
-                            </td>
-                            <td>Win 95+</td>
+                        <tr ng-repeat="reportRow in reportCountList">
+                            <td>{{reportRow.day }}</td>
+                            <td>{{reportRow.sumTotalFee/100}}</td>
+                            <td>{{reportRow.count}}</td>
+                            <td>{{reportRow.YlConut.sumTotalFee/100}}</td>
+                            <td>{{reportRow.YlConut.count}}</td>
+                            <td>{{reportRow.weiXinAndAliConut.sumTotalFee/100}}</td>
+                            <td>{{reportRow.weiXinAndAliConut.count}}</td>
                             <td> 4</td>
                             <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td> 4</td>
-
-
-                            <td class="text-center">
-
-                                <button style="margin-left:10px" class="btn btn-success">修改</button>
-                                <button style="margin-left:10px" class="btn btn-danger">删除</button>
-
-                            </td>
+                            <td>{{reportRow.sumDiscountFee/100}}</td>
                         </tr>
 
                         </tbody>
@@ -122,7 +109,7 @@
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
-
+            <tm-pagination  conf="paginationConf"></tm-pagination>
 
         </div>
         <!-- /.col -->
@@ -151,8 +138,8 @@
         // $("#example2").DataTable();
         $('#example2').DataTable({
             "paging": true,  //分页 (分页开了才有长变化)
-            "lengthChange": false,  //长变化
-            "searching": false,  //搜索
+            "lengthChange": true,  //长变化
+            "searching": true,  //搜索
             "ordering": false, //排序按钮
             "info": true,   //页脚分页信息
             "autoWidth": false,

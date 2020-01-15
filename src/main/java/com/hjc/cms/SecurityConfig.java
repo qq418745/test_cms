@@ -41,7 +41,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .csrf().disable();//关闭CSRF
         http
                 .headers().frameOptions().sameOrigin();//放frame
-
+        http
+                .headers().contentTypeOptions().disable();//放静态资源
         //开启自动配置的注销功能，会访问/logout请求
         http.logout().logoutSuccessUrl("/"); //注销成功后，回到首页
 

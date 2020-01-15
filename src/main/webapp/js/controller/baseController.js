@@ -3,7 +3,7 @@ app.controller("baseController",function($scope,$sce){
 	$scope.paginationConf = {
 		 currentPage: 1, // 当前页数
 		 totalItems: 10, // 总记录数
-		 itemsPerPage: 10, // 每页显示多少条记录
+		 itemsPerPage: 20, // 每页显示多少条记录
 		 perPageOptions: [10, 20, 30, 40, 50],// 显示多少条下拉列表
 		 onChange: function(){ // 当页码、每页显示多少条下拉列表发生变化的时候，自动触发了
 			$scope.reloadList();// 重新加载列表
@@ -54,6 +54,10 @@ app.controller("baseController",function($scope,$sce){
 	}
 
 
-
-
+    isNullCharacter = function(v) {
+        return  v === "";
+    };
+    isBlank = function(v) {
+        return (v === null) || (v === undefined) || (v === '') || (Array.isArray(v) && v.length === 0);
+    };
 });
