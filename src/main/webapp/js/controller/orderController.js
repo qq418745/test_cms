@@ -22,11 +22,7 @@ app.controller('orderController' ,function($scope,$controller,orderService){
 
     $scope.notifyStatusArray  = [{name:'全部'},{id: 0, name: '未通知'},{id:1, name: '成功'},{id:2,name:'失败'}];
     $scope.notifyStatusArrayIndex = 0;
-    $scope.typeArray  = [{name:'详情'},{id: 0, name: '日报'},{id:1, name: '月报'},{id:2,name:'年报'}];
-    $scope.typeArrayIndex = 0;
-    $scope.typeSwitch=function(index){
 
-    };
     $scope.notifyStatusSwitch = function(index){
         $scope.notifyStatusArrayIndex = index;
         if(index === 0){

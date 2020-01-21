@@ -7,7 +7,7 @@ import java.util.Date;
 
 import static com.hjc.cms.IConst.DEFAULT_TIME_PATTERN;
 /**
- * @program: hjc_cms
+ * hjc_cms
  * Mr.liuchengming
  * 2020-01-03 12:35
  **/

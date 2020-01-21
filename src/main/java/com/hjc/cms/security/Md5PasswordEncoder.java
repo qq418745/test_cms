@@ -1,13 +1,13 @@
-package com.hjc.cms;
+package com.hjc.cms.security;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-02 16:20
+ * hjc_cms
+ * 密码校验方式
+ * Mr.liuchengming
+ * 2020-01-02 16:20
  **/
 public class Md5PasswordEncoder  implements PasswordEncoder {
     @Override

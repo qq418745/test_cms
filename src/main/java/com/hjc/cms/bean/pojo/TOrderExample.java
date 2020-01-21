@@ -15,6 +15,9 @@ public class TOrderExample {
     protected String orderByClause;
 
     protected boolean distinct;
+
+    protected boolean payFlagsNotIn;
+
     protected List<Criteria> oredCriteria;
    //扩展参数 parkId
     protected   String parkId = null;
@@ -25,6 +28,14 @@ public class TOrderExample {
     //扩展参数 outTimeStamp
     protected   String outTimeStamp = null ;
     protected   int[] payFlags = null ;
+
+    public boolean isPayFlagsNotIn() {
+        return payFlagsNotIn;
+    }
+
+    public void setPayFlagsNotIn(boolean payFlagsNotIn) {
+        this.payFlagsNotIn = payFlagsNotIn;
+    }
 
     public int[] getPayFlags() {
         return payFlags;

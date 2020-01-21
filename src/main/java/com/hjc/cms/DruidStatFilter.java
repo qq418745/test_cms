@@ -6,10 +6,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.Wang
- * @create: 2020-01-08 21:00
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-08 21:00
  **/
 
 @WebFilter(filterName="druidWebStatFilter",

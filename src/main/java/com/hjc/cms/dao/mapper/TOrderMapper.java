@@ -7,10 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-03 10:35
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-03 10:35
  **/
 public interface TOrderMapper {
     int countByExample(TOrderExample example);

@@ -94,7 +94,7 @@
     discount_type, discount_fee, discount_detail, card_id, apply_status, due_time, bill_id, t_order.park_id , park_name
   </sql>
 
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hjc.cms.bean.pojo.TOrderExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="TOrderExample" >
     select
     <if test="distinct" >
       distinct
@@ -127,6 +127,7 @@
       order by ${orderByClause}
     </if>
   </select>
+
   <select id="selectReportSumCountByExample"  resultType="OrderReportCount"   parameterType="TOrderExample">
       select  date(time_stamp) as day,
               sum(total_fee) as sumTotalFee,
@@ -134,21 +135,29 @@
               count(*) as count
       from    t_order
 
-
     <if test="_parameter != null">
         <where>
+
           <include refid="Example_Where_Clause" />
+
           <if test="payFlags != null">
-            and  pay_flag in
+            and  pay_flag
+
+            <if test="payFlagsNotIn">
+             not
+            </if>
+
+             in
+
              <foreach collection="payFlags" item="payFlag" separator="," open="(" close=")">
               #{payFlag}
              </foreach>
           </if>
           <if test="startTimeStamp != null">
-            and  UNIX_TIMESTAMP(time_stamp) &gt;=  UNIX_TIMESTAMP(startTimeStamp)
+            and  UNIX_TIMESTAMP(time_stamp) &gt;=  UNIX_TIMESTAMP(#{startTimeStamp})
           </if>
           <if test="outTimeStamp != null">
-            and  UNIX_TIMESTAMP(time_stamp) &lt;=  UNIX_TIMESTAMP(outTimeStamp)
+            and  UNIX_TIMESTAMP(time_stamp) &lt;=  UNIX_TIMESTAMP(#{outTimeStamp})
           </if>
         </where>
     </if>

@@ -1,4 +1,4 @@
-package com.hjc.cms;
+package com.hjc.cms.security;
 
 import com.hjc.cms.bean.User;
 import com.hjc.cms.security.UserDetail;
@@ -18,10 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-02 14:58
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-02 14:58
  **/
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -1,7 +1,7 @@
 package com.hjc.cms.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import java.io.Serializable;
 
@@ -11,6 +11,7 @@ import static com.hjc.cms.IConst.DEFAULT_DATE_PATTERN;
 
 /**
  * hjc_cms
+ * info:
  * Mr.liuchengming
  * 2020-01-14 15:34
  **/

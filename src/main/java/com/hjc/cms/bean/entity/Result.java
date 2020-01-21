@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * hjc_cms
- * 用于向页面传递信息的类
+ * info：用于向页面传递信息的类
  * Mr.liuchengming
  * 2020-01-03 10:35
  **/

@@ -13,10 +13,10 @@ import javax.sql.DataSource;
 
 
 /**
- * @program: hjc_cms
- * @description: SpringBoot引导类
- * @author: Mr.liuchengming
- * @create: 2019-12-19 12:00
+ * hjc_cms
+ * SpringBoot引导类
+ * Mr.liuchengming
+ * 2019-12-19 12:00
  **/
 @SpringBootApplication
 @MapperScan("com.hjc.cms.dao.mapper")

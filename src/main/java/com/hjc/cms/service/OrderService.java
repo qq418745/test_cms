@@ -7,10 +7,9 @@ import java.util.List;
 
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-03 10:35
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-03 10:35
  **/
 public interface OrderService {
 
@@ -59,5 +58,5 @@ public interface OrderService {
 	/**
 	 * 查询报表接口
 	 */
-	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,int pageNum, int pageSize);
+	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,boolean payFlagsNotIn,int pageNum, int pageSize);
 }

@@ -56,15 +56,36 @@
             <div class="card">
 
                 <div class="card-body">
-                    <!--<div class="box-tools pull-right">-->
-                    <!--<div class="has-feedback">-->
+                    <div class="box-tools pull-right">
+                    <div class="has-feedback">
 
-                    <!--<button type="button" class="btn btn-secondary btn-lg">新增配置</button>-->
+                        <button type="button" class="btn btn-secondary btn-lg">新增配置</button>
+                        <div class="dropdown" style="float: left;margin-right: 4px">
+                            <button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                类型: {{typeArray[typeArrayIndex].name}}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >日报</a>
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >月报</a>
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >年报</a>
+                            </div>
+                        </div>
 
-                    <!--</div>-->
-                    <!--</div>-->
+                        <div class="dropdown" style="float: left;margin-right: 4px">
+                            <button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                类型: {{typeArray[typeArrayIndex].name}}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >日报</a>
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >月报</a>
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >年报</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
 
-                    <table id="example2" class="table table-bordered table-striped">
+
+                    <table id="example2" class="table table-bordered table-striped  table-head-fixed">
                         <thead>
                         <tr>
                             <th>日期</th>
@@ -85,13 +106,13 @@
                             <td>{{reportRow.day }}</td>
                             <td>{{reportRow.sumTotalFee/100}}</td>
                             <td>{{reportRow.count}}</td>
-                            <td>{{reportRow.YlConut.sumTotalFee/100}}</td>
-                            <td>{{reportRow.YlConut.count}}</td>
-                            <td>{{reportRow.weiXinAndAliConut.sumTotalFee/100}}</td>
-                            <td>{{reportRow.weiXinAndAliConut.count}}</td>
-                            <td> 4</td>
-                            <td> 4</td>
-                            <td>{{reportRow.sumDiscountFee/100}}</td>
+                            <td>{{reportRow.YlConut.sumTotalFee == null ? 0: reportRow.YlConut.sumTotalFee/100}}</td>
+                            <td>{{reportRow.YlConut.count == null ? 0: reportRow.YlConut.count}}</td>
+                            <td>{{reportRow.weiXinAndAliConut.sumTotalFee == null ? 0:reportRow.weiXinAndAliConut.sumTotalFee/100}}</td>
+                            <td>{{reportRow.weiXinAndAliConut.count == null ? 0: reportRow.weiXinAndAliConut.count}}</td>
+                            <td> {{reportRow.reportOtherList.sumTotalFee == null? 0: reportRow.reportOtherList.sumTotalFee/100}}</td>
+                            <td> {{reportRow.reportOtherList.count == null ? 0: reportRow.reportOtherList.count}}</td>
+                            <td>{{reportRow.sumDiscountFee == null ? 0: reportRow.sumDiscountFee/100}}</td>
                         </tr>
 
                         </tbody>
@@ -137,11 +158,11 @@
     $(function () {
         // $("#example2").DataTable();
         $('#example2').DataTable({
-            "paging": true,  //分页 (分页开了才有长变化)
-            "lengthChange": true,  //长变化
-            "searching": true,  //搜索
+            "paging": false,  //分页 (分页开了才有长变化)
+            "lengthChange": false,  //长变化
+            "searching": false,  //搜索
             "ordering": false, //排序按钮
-            "info": true,   //页脚分页信息
+            "info": false,   //页脚分页信息
             "autoWidth": false,
             language: {
                 "sProcessing": "处理中...",

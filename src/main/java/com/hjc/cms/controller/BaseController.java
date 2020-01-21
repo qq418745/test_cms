@@ -8,14 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-
-
 import javax.servlet.http.HttpServletRequest;
 
-import static org.springframework.util.StringUtils.isEmpty;
 
 /**
  * hjc_cms
+ * info:
  * Mr.liuchengming
  * 2020-01-03 11:35
  **/

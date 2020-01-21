@@ -1,7 +1,6 @@
 package com.hjc.cms.controller;
 
 import com.hjc.cms.IConst;
-import com.hjc.cms.bean.User;
 import com.hjc.cms.bean.entity.PageResult;
 import com.hjc.cms.bean.pojo.TOrder;
 import com.hjc.cms.service.OrderService;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-03 10:35
+ * hjc_cms
+ * info:
+ * Mr.liuchengming
+ * 2020-01-03 10:35
  **/
 @RestController
 @RequestMapping("order")
@@ -45,8 +44,8 @@ public class OrderController  extends  BaseController implements IConst  {
      * exportType  报表类型  1 = 日报 2 = 月报  3 = 年报
      */
     @RequestMapping("/get-report-data")
-    public PageResult getReportData(@RequestBody TOrder tOrder,String startTimeStamp , String outTimeStamp,Integer exportType,int[] payFlags,int page, int rows){
-        PageResult report = orderService.findReport(tOrder, startTimeStamp, outTimeStamp, exportType, payFlags,page, rows);
+    public PageResult getReportData(@RequestBody TOrder tOrder,String startTimeStamp , String outTimeStamp,Integer exportType,int[] payFlags,boolean payFlagsNotIn,int page, int rows){
+        PageResult report = orderService.findReport(tOrder, startTimeStamp, outTimeStamp, exportType, payFlags,payFlagsNotIn,page, rows);
         return  report;
     }
 

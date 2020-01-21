@@ -1,4 +1,4 @@
-package com.hjc.cms;
+package com.hjc.cms.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +10,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2019-12-31 17:17
+ * hjc_cms
+ * Mr.liuchengming
+ * 2019-12-31 17:17
  **/
 @EnableWebSecurity
 @Configuration
@@ -64,7 +61,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
 
-    @Override
+    @Override   // UserDetailsService实现 和 passwordEncoder实现加载
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(passwordEncoder());

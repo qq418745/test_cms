@@ -19,10 +19,9 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-03 10:35
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-03 10:35
  **/
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -122,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
 	 * 查询订单报表
 	 */
 	@Override
-	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,int pageNum, int pageSize) {
+	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,boolean payFlagsNotIn,int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 
 		TOrderExample example=new TOrderExample();
@@ -139,6 +138,11 @@ public class OrderServiceImpl implements OrderService {
 		if(payFlags != null && payFlags.length > 0){
 			example.setPayFlags(payFlags);
 		}
+
+		if(payFlagsNotIn){
+			example.setPayFlagsNotIn(payFlagsNotIn);
+		}
+
          //总数与银联
 		Page<OrderReportCount> page = (Page<OrderReportCount>) orderMapper.selectReportSumCountByExample(example);
 			//支付宝微信总数

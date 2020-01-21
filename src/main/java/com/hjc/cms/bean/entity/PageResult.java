@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * hjc_cms
- * 分页返回的实体类
+ * info：分页返回的实体类
  * Mr.liuchengming
  * 2020-01-05 10:35
  **/
@@ -19,6 +19,7 @@ public class PageResult implements Serializable{
 		this.total = total;
 		this.rows = rows;
 	}
+
 	public long getTotal() {
 		return total;
 	}

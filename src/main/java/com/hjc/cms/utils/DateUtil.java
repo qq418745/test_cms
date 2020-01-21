@@ -8,10 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @program: hjc_cms
- * @description:
- * @author: Mr.liuchengming
- * @create: 2020-01-12 17:47
+ * hjc_cms
+ * Mr.liuchengming
+ * 2020-01-12 17:47
  **/
 public class DateUtil {
 
