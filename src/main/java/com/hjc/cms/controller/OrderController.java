@@ -46,6 +46,7 @@ public class OrderController  extends  BaseController implements IConst  {
     @RequestMapping("/get-report-data")
     public PageResult getReportData(@RequestBody TOrder tOrder,String startTimeStamp , String outTimeStamp,Integer exportType,int[] payFlags,boolean payFlagsNotIn,int page, int rows){
         PageResult report = orderService.findReport(tOrder, startTimeStamp, outTimeStamp, exportType, payFlags,payFlagsNotIn,page, rows);
+
         return  report;
     }
 

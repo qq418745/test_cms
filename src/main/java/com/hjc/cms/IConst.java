@@ -7,6 +7,8 @@ package com.hjc.cms;
 
 public interface IConst {
     String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
+    String MONTH_DATE_PATTERN = "yyyy-MM";
+    String YEAR_DATE_PATTERN = "yyyy";
     String DEFAULT_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     String DEFAULT_TIME_PATTERN_TINY = "yyyyMMddHHmmss";
     int INVALIDATE_INT = -1000;

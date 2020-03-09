@@ -20,14 +20,24 @@ public class TOrderExample {
 
     protected List<Criteria> oredCriteria;
    //扩展参数 parkId
-    protected   String parkId = null;
+    protected   String parkId;
     //扩展参数 parkId
-    protected   String[] parkIds = null;
+    protected   String[] parkIds;
     //扩展参数 startTimeStamp
-    protected   String startTimeStamp = null;
+    protected   String startTimeStamp;
     //扩展参数 outTimeStamp
-    protected   String outTimeStamp = null ;
-    protected   int[] payFlags = null ;
+    protected   String outTimeStamp;
+    //扩展参数 报表类型
+    protected   int exportType;
+    protected   int[] payFlags;
+
+    public int getExportType() {
+        return exportType;
+    }
+
+    public void setExportType(int exportType) {
+        this.exportType = exportType;
+    }
 
     public boolean isPayFlagsNotIn() {
         return payFlagsNotIn;

@@ -26,8 +26,21 @@
     <!--<link rel="stylesheet" href="../plugins/adminLTEPlugins/summernote/summernote-bs4.css">-->
     <!--&lt;!&ndash; Google Font: Source Sans Pro &ndash;&gt;-->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="../plugins/angularjs/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+    <script type="text/javascript" src="../js/controller/homeController.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/service/homeService.js"></script>
+    <script type="text/javascript" src="../js/service/orderReportService.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
 </head>
-<body>
+<body ng-app="cms" ng-controller="homeController" ng-init="init()" >
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -150,11 +163,11 @@
 
                         <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> 今日
+                    <i class="fas fa-square text-primary"></i> 金额
                   </span>
 
                             <span>
-                    <i class="fas fa-square text-gray"></i> 昨日
+                    <i class="fas fa-square text-gray"></i> 笔数
                   </span>
                         </div>
                     </div>
@@ -240,11 +253,11 @@
                             <!-- /.col -->
                             <div class="col-md-4">
                                 <ul class="chart-legend clearfix">
-                                    <li><i class="far fa-circle text-danger"></i> 微信</li>
-                                    <li><i class="far fa-circle text-success"></i> 支付宝</li>
+                                    <li><i class="far fa-circle text-danger"></i> 银联(微信)</li>
+                                    <li><i class="far fa-circle text-success"></i> 银联(支付宝)</li>
                                     <li><i class="far fa-circle text-warning"></i> 云闪付</li>
-                                    <li><i class="far fa-circle text-info"></i> 现金</li>
-                                    <li><i class="far fa-circle text-primary"></i> 招商银行</li>
+                                    <li><i class="far fa-circle text-info"></i> 微信</li>
+                                    <li><i class="far fa-circle text-primary"></i> 支付宝</li>
                                     <li><i class="far fa-circle text-secondary"></i> 其他</li>
                                 </ul>
                             </div>
@@ -257,17 +270,19 @@
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    支付宝
+                                    支付宝(总)
                                     <span class="float-right text-danger">
-                        <i class="fas fa-arrow-down text-sm"></i>
-                        12%</span>
+                        <!--<i class="fas fa-arrow-down text-sm"></i>-->
+                        <i class="fas  text-sm"></i>
+                        {{ali}}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    微信
+                                    微信(总)
                                     <span class="float-right text-success">
-                        <i class="fas fa-arrow-up text-sm"></i> 4%
+                        <!--<i class="fas fa-arrow-up text-sm"></i> {{weixin}}%-->
+                        <i class="fas  text-sm"></i> {{weixin}}
                       </span>
                                 </a>
                             </li>
@@ -275,7 +290,8 @@
                                 <a href="#" class="nav-link">
                                     其他
                                     <span class="float-right text-warning">
-                        <i class="fas fa-arrow-left text-sm"></i> 0%
+                        <!--<i class="fas fa-arrow-left text-sm"></i> {{other}} %-->
+                        <i class="fas  text-sm"></i> {{other}}
                       </span>
                                 </a>
                             </li>
@@ -376,7 +392,7 @@
 <!--<script src="../plugins/adminLTEPlugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>-->
 <!-- AdminLTE App -->
 <script src="../plugins/adminLTE/js/adminlte.js"></script>
-<script src="../js/home.js"></script>
+<!--<script src="../js/home.js"></script>-->
 
 
 </body>

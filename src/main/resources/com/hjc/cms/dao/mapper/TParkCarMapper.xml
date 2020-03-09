@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjc.cms.dao.mapper.TParkCarMapper" >
+  <resultMap id="BaseResultMap" type="com.hjc.cms.bean.pojo.TParkCar" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="FLOAT" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <association property="tPark" column="park_id" javaType="com.hjc.cms.bean.pojo.TPark">
+      <id  column="park_id" property="parkId"  />
+      <result column="park_name"  property="parkName"  />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, car_number, enter_time, out_time, order_id,
+    operator, total_fee, device_id,t_park.park_id , park_name
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hjc.cms.bean.pojo.TParkCarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_park_car  left join t_park on t_park_car.park_id = t_park.park_id
+    <if test="_parameter != null" >
+      <where>
+        <include refid="Example_Where_Clause" />
+      </where>
+    </if>
+    <if test="parkCarByClause != null" >
+      order by ${parkCarByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_park_car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_park_car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hjc.cms.bean.pojo.TParkCarExample" >
+    delete from t_park_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hjc.cms.bean.pojo.TParkCar" >
+    insert into t_park_car (id, car_number, park_id,
+      enter_time, out_time, order_id,
+      operator, total_fee, device_id)
+    values (#{id,jdbcType=INTEGER}, #{carNumber,jdbcType=VARCHAR}, #{parkId,jdbcType=VARCHAR},
+      #{enterTime,jdbcType=TIMESTAMP}, #{outTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR},
+      #{operator,jdbcType=VARCHAR}, #{totalFee,jdbcType=FLOAT}, #{deviceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjc.cms.bean.pojo.TParkCar" >
+    insert into t_park_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="carNumber != null" >
+        car_number,
+      </if>
+      <if test="parkId != null" >
+        park_id,
+      </if>
+      <if test="enterTime != null" >
+        enter_time,
+      </if>
+      <if test="outTime != null" >
+        out_time,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carNumber != null" >
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null" >
+        #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null" >
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=FLOAT},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hjc.cms.bean.pojo.TParkCarExample" resultType="java.lang.Integer" >
+    select count(*) from t_park_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_park_car
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.carNumber != null" >
+        trade_no = #{record.carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkId != null" >
+        park_id = #{record.parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterTime != null" >
+        enter_time = #{record.enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outTime != null" >
+        out_time = #{record.outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=FLOAT},
+      </if>
+      <if test="record.deviceId != null" >
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_park_car
+    set id = #{record.id,jdbcType=INTEGER},
+      car_number = #{record.carNumber,jdbcType=VARCHAR},
+      park_id = #{record.parkId,jdbcType=VARCHAR},
+      enter_time = #{record.enterTime,jdbcType=TIMESTAMP},
+      out_time = #{record.outTime,jdbcType=TIMESTAMP},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      total_fee = #{record.totalFee,jdbcType=FLOAT},
+      device_id = #{record.deviceId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjc.cms.bean.pojo.TParkCar" >
+    update t_park_car
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.carNumber != null" >
+        trade_no = #{record.carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkId != null" >
+        park_id = #{record.parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterTime != null" >
+        enter_time = #{record.enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outTime != null" >
+        out_time = #{record.outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=FLOAT},
+      </if>
+      <if test="record.deviceId != null" >
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjc.cms.bean.pojo.TParkCar" >
+     update t_park_car
+     set id = #{record.id,jdbcType=INTEGER},
+      car_number = #{record.carNumber,jdbcType=VARCHAR},
+      park_id = #{record.parkId,jdbcType=VARCHAR},
+      enter_time = #{record.enterTime,jdbcType=TIMESTAMP},
+      out_time = #{record.outTime,jdbcType=TIMESTAMP},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      total_fee = #{record.totalFee,jdbcType=FLOAT},
+      device_id = #{record.deviceId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

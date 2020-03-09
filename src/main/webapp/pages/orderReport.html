@@ -37,12 +37,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>停车场配置</h1>
+                <h1>日月年报</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">停车场配置</li>
+                    <li class="breadcrumb-item active">日月年报</li>
                 </ol>
             </div>
         </div>
@@ -56,36 +56,36 @@
             <div class="card">
 
                 <div class="card-body">
+
                     <div class="box-tools pull-right">
                     <div class="has-feedback">
-
-                        <button type="button" class="btn btn-secondary btn-lg">新增配置</button>
                         <div class="dropdown" style="float: left;margin-right: 4px">
                             <button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 类型: {{typeArray[typeArrayIndex].name}}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >日报</a>
-                                <a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >月报</a>
-                                <a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >年报</a>
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >月报</a>
+                                <a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >年报</a>
                             </div>
                         </div>
 
-                        <div class="dropdown" style="float: left;margin-right: 4px">
-                            <button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                类型: {{typeArray[typeArrayIndex].name}}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >日报</a>
-                                <a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >月报</a>
-                                <a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >年报</a>
-                            </div>
-                        </div>
+                        <!--<div class="dropdown" style="float: left;margin-right: 4px">-->
+                            <!--<button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                                <!--类型: {{typeArray[typeArrayIndex].name}}-->
+                            <!--</button>-->
+                            <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+                                <!--<a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >日报</a>-->
+                                <!--<a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >月报</a>-->
+                                <!--<a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >年报</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                     </div>
 
-
-                    <table id="example2" class="table table-bordered table-striped  table-head-fixed">
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 600px;">
+                    <table  class="table table-bordered table-striped  table-head-fixed table-hover">
                         <thead>
                         <tr>
                             <th>日期</th>
@@ -103,7 +103,7 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="reportRow in reportCountList">
-                            <td>{{reportRow.day }}</td>
+                            <td>{{reportRow.time }}</td>
                             <td>{{reportRow.sumTotalFee/100}}</td>
                             <td>{{reportRow.count}}</td>
                             <td>{{reportRow.YlConut.sumTotalFee == null ? 0: reportRow.YlConut.sumTotalFee/100}}</td>
@@ -135,6 +135,7 @@
         </div>
         <!-- /.col -->
     </div>
+    </div>
     <!-- /.row -->
 </section>
 <!-- /.content -->
@@ -151,45 +152,12 @@
 <script src="../plugins/adminLTEPlugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="../plugins/adminLTE/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../plugins/adminLTE/js/demo.js"></script>
-<!-- page script -->
+
+
+
 <script>
-    $(function () {
-        // $("#example2").DataTable();
-        $('#example2').DataTable({
-            "paging": false,  //分页 (分页开了才有长变化)
-            "lengthChange": false,  //长变化
-            "searching": false,  //搜索
-            "ordering": false, //排序按钮
-            "info": false,   //页脚分页信息
-            "autoWidth": false,
-            language: {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
-                },
-                "oAria": {
-                    "sSortAscending": ": 以升序排列此列",
-                    "sSortDescending": ": 以降序排列此列"
-                }
-            },
-        });
-    });
+
+
 </script>
 </body>
 </html>

@@ -14,7 +14,19 @@ public class Result implements Serializable{
 	private boolean success;
 	private boolean flag;
 	private String message;
-	
+	private Object info;
+
+	public Object getInfo() {
+		return info;
+	}
+
+	public Result setInfo(Object info) {
+		this.info = info;
+		return this;
+	}
+
+
+
 	public Result(boolean success, String message) {
 		super();
 		this.success=success;

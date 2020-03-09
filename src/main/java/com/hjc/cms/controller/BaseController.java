@@ -39,7 +39,7 @@ public abstract class BaseController {
     }
 
 
-
+    //获取当前用户
     protected User currentUser() {
         UserDetail principal = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return principal == null ? null :  principal.getUser();

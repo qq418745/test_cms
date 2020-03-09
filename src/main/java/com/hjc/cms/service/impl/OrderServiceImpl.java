@@ -119,10 +119,28 @@ public class OrderServiceImpl implements OrderService {
 
 	/**
 	 * 查询订单报表
+	 *  exportType  报表类型  1 = 日报 2 = 月报  3 = 年报
 	 */
 	@Override
 	public PageResult findReport(TOrder tOrder, String startTimeStamp, String outTimeStamp, Integer exportType,int[] payFlags,boolean payFlagsNotIn,int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
+
+
+//		switch (exportType){
+//
+//			case 1:
+//
+//			break;
+//
+//			case 2:
+//
+//			break;
+//
+//			case 3:
+//			break;
+//		}
+
+
 
 		TOrderExample example=new TOrderExample();
 		if(tOrder != null){
@@ -142,6 +160,7 @@ public class OrderServiceImpl implements OrderService {
 		if(payFlagsNotIn){
 			example.setPayFlagsNotIn(payFlagsNotIn);
 		}
+		example.setExportType(exportType);
 
          //总数与银联
 		Page<OrderReportCount> page = (Page<OrderReportCount>) orderMapper.selectReportSumCountByExample(example);

@@ -36,12 +36,32 @@
 
 
 </head>
-<body ng-app="cms" ng-controller="orderController" >
+<body ng-app="cms" class="hold-transition sidebar-mini"  ng-controller="orderController" >
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>订单详情</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">订单详情</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
     <!-- /.row -->
     <div class="row">
         <div class="col-12">
-                <!--<div class="card">-->
-
+                <div class="card">
+                     <div class="card-body">
 
                     <div class="input-group" style="width: 150px; float: left;margin-right: 4px ">
                         <input type="text" name="table_search" ng-model="searchEntity.carNumber" class="form-control float-right" placeholder="车牌号搜索">
@@ -105,8 +125,11 @@
             </div>
 
                      <div style="float: left;margin-left: 10px" >
-                <input  type="checkbox"  ng-click="autoRefreshSwitch()"/>
-                         <button id="autoButton" class="btn btn-success disabled" >自动刷新</button>
+                         <div class="icheck-primary">
+                             <input  type="checkbox"  ng-click="autoRefreshSwitch()"/>
+                             <button id="autoButton" class="btn btn-success disabled" >自动刷新</button>
+                     </div>
+
                      </div>
                 <!--</div>-->
 
@@ -239,13 +262,16 @@
                     </table>
                 </div>
 
+                     </div>
+                </div>
                 <!-- /.card-body -->
             <tm-pagination  conf="paginationConf"></tm-pagination>
             </div>
             <!-- /.card -->
         </div>
 
-
+</section>
+<!-- /.content -->
 
     <!--</div>-->
     <!--&lt;!&ndash; 编辑窗口 &ndash;&gt;-->

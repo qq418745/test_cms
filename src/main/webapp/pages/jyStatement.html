@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | DataTables</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../plugins/adminLTEPlugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../plugins/adminLTEPlugins/datatables-bs4/css/dataTables.bootstrap4.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../plugins/adminLTE/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="../plugins/angularjs/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+    <script type="text/javascript" src="../js/controller/jyStatementController.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/service/jyStatementService.js"></script>
+
+    <!-- 引入分页相关的JS和CSS -->
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+</head>
+<body class="hold-transition sidebar-mini" ng-app="cms" ng-controller="jyStatementController" ng-init="search(1,paginationConf.itemsPerPage)">
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>停车场配置</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">停车场配置</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback">
+
+                            <div class="dropdown" style="float: left;margin-right: 4px">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    停车场: {{typeArray[typeArrayIndex].name}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >111测试停车场</a>
+                                    <a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >农商行测试停车场</a>
+
+                                </div>
+                            </div>
+
+                            <!--<div class="dropdown" style="float: left;margin-right: 4px">-->
+                            <!--<button class="btn btn-secondary dropdown-toggle" type="button"  aria-labelledby="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                            <!--类型: {{typeArray[typeArrayIndex].name}}-->
+                            <!--</button>-->
+                            <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+                            <!--<a class="dropdown-item" href="#" ng-click="typeSwitch(0)" >日报</a>-->
+                            <!--<a class="dropdown-item" href="#" ng-click="typeSwitch(2)" >月报</a>-->
+                            <!--<a class="dropdown-item" href="#" ng-click="typeSwitch(1)" >年报</a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 600px;">
+                        <table  class="table table-bordered table-striped  table-head-fixed table-hover">
+                            <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>停车场</th>
+                                <th>现金(元)</th>
+                                <th>网络支付(元)</th>
+                                <th>vip停车(元)</th>
+                                <th>App微信支付宝(元)</th>
+                                <th>酒店及优惠劵(元)</th>
+                                <th>免费放行</th>
+                                <th>进车数</th>
+                                <th>出车数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="jyStatement in jyStatementList">
+                                <td>{{jyStatement.dayTime.split(" ")[0]}}</td>
+                                <td>{{jyStatement.park.parkName}}</td>
+                                <td>{{jyStatement.cashMny}}</td>
+                                <td>{{jyStatement.netMny}}</td>
+                                <td>{{jyStatement.vipGradeMny}}</td>
+                                <td>{{jyStatement.appWxZfbMny}}</td>
+                                <td>{{jyStatement.hotelCouMny}}</td>
+                                <td>{{jyStatement.freeReleaseMny}}</td>
+                                <td>{{jyStatement.inCarNum}}</td>
+                                <td>{{jyStatement.outCarNum}}</td>
+                            </tr>
+
+                            </tbody>
+                            <!--<tfoot>-->
+                            <!--<tr>-->
+                            <!--<th>Rendering engine</th>-->
+                            <!--<th>Browser</th>-->
+                            <!--<th>Platform(s)</th>-->
+                            <!--<th>Engine version</th>-->
+                            <!--<th>CSS grade</th>-->
+                            <!--</tr>-->
+                            <!--</tfoot>-->
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <tm-pagination  conf="paginationConf"></tm-pagination>
+
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/adminLTEPlugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/adminLTEPlugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../plugins/adminLTEPlugins/datatables/jquery.dataTables.js"></script>
+<script src="../plugins/adminLTEPlugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- AdminLTE App -->
+<script src="../plugins/adminLTE/js/adminlte.min.js"></script>
+
+</body>
+</html>

@@ -1,6 +1,9 @@
 package com.hjc.cms.service;
 
+
 import com.hjc.cms.bean.User;
+import com.hjc.cms.bean.entity.PageResult;
+
 
 /**
  * hjc_cms
@@ -8,6 +11,11 @@ import com.hjc.cms.bean.User;
  * 2020-01-02 15:03
  **/
 public interface UserService {
+
+
     public User findByName(String userName);
+
+    public PageResult findByPage(User user, int page, int rows);
+
 
 }

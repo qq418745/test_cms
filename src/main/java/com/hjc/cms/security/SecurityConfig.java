@@ -28,7 +28,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/css/**", "/img/**","/plugins/**").permitAll();
+        http.authorizeRequests().antMatchers("/css/**", "/img/**","/**.ico","/plugins/**").permitAll();
         //super.configure(http);
         http
                 .formLogin().loginPage("/login").loginProcessingUrl("/login-check").failureUrl("/login?error=true").permitAll()  //表单登录，permitAll()表示这个不需要验证 登录页面，登录失败页面

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.sql.DataSource;
@@ -20,6 +21,7 @@ import javax.sql.DataSource;
  **/
 @SpringBootApplication
 @MapperScan("com.hjc.cms.dao.mapper")
+//@ImportResource("classPath:mvc-dispatcher-servlet.xml")
 public class MySpringBootApplication {
 
     public static void main(String[] args) {

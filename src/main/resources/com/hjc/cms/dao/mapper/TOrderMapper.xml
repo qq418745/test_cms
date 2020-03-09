@@ -29,6 +29,10 @@
       <result column="park_name"  property="parkName"  />
     </association>
   </resultMap>
+  <resultMap id="mapResult" type="com.hjc.cms.bean.entity.MapResult">
+    <result column="mapResultKey" property="key" jdbcType="VARCHAR" />
+    <result column="mapResultValue" property="value" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
 
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -129,7 +133,17 @@
   </select>
 
   <select id="selectReportSumCountByExample"  resultType="OrderReportCount"   parameterType="TOrderExample">
-      select  date(time_stamp) as day,
+
+      select
+             <if test="exportType == 1">
+              DATE_FORMAT(time_stamp ,'%Y-%m-%d') as time,
+             </if>
+             <if test="exportType == 2">
+              DATE_FORMAT(time_stamp ,'%Y-%m') as time,
+             </if>
+             <if test="exportType == 3">
+              DATE_FORMAT(time_stamp ,'%Y') as time,
+             </if>
               sum(total_fee) as sumTotalFee,
               sum(discount_fee) as sumDiscountFee ,
               count(*) as count
@@ -137,6 +151,7 @@
 
     <if test="_parameter != null">
         <where>
+
 
           <include refid="Example_Where_Clause" />
 
@@ -146,9 +161,7 @@
             <if test="payFlagsNotIn">
              not
             </if>
-
              in
-
              <foreach collection="payFlags" item="payFlag" separator="," open="(" close=")">
               #{payFlag}
              </foreach>
@@ -161,7 +174,15 @@
           </if>
         </where>
     </if>
-    group by date(time_stamp)
+    <if test="exportType == 1">
+      group by DATE_FORMAT(time_stamp ,'%Y-%m-%d')
+    </if>
+    <if test="exportType == 2">
+      group by DATE_FORMAT(time_stamp ,'%Y-%m')
+    </if>
+    <if test="exportType == 3">
+      group by DATE_FORMAT(time_stamp ,'%Y')
+    </if>
     order by  time_stamp DESC
 
   </select>
@@ -194,6 +215,17 @@
 
     <!--</select>-->
 
+   <select id="findChargeTypeByExample" resultMap="mapResult" parameterType="java.util.List">
+        select  pay_flag as mapResultKey ,count(pay_flag) as mapResultValue
+        from t_order
+        <!--where-->
+<!--&#45;&#45;               pay_status == 1-->
+            <!--<if test="parkIds != null">-->
+               <!--park_id  in (parkIds)-->
+            <!--</if>-->
+
+        group by pay_flag
+    </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
