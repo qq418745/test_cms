@@ -19,9 +19,9 @@ public interface ConfigService {
     public PageResult findPage(int pageNum, int pageSize);
 
     /**
-     * 修改
+     * 保存
      */
-    public void update(DynamicConf dynamicConf);
+    public void save(DynamicConf dynamicConf);
 
     /**
      * 删除

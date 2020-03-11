@@ -15,6 +15,36 @@ app.controller("baseController",function($scope,$sce){
 		 $scope.search($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
 	}
 
+
+      //输入框效果
+    $('.input-check')
+        .focus(function() {
+            $(this).css({ 'border': '1px solid #28a745', 'background': '#fff' });
+        })
+        .blur(function() {
+            var value = $(this).val(); // 获取值
+            if (value == '') {// 判断是否是空字符串，而不是null
+                $(this).css({ 'border': '1px solid #dc3545', 'background': '#fff' });
+                return false;
+            }
+        })
+
+	//输入框
+	$scope.inputCheckInit=function(){
+        var input = $('.input-check');
+        // var value = input.val();
+        // if (value == '') {// 判断是否是空字符串，而不是null
+        //     input.css({ 'border': '1px solid #dc3545', 'background': '#fff' });
+        // }else{
+            input.css({ 'border': '1px solid #28a745', 'background': '#fff' });
+		// }
+
+	}
+    //输入框
+    $scope.inputInit=function(){
+         $('.input-check').css({ 'border': '1px solid #000', 'background': '#fff' });
+    }
+
       //方法返回内容解析位 html
     trustHtml =function(input){
         return $sce.trustAsHtml(input);
@@ -35,6 +65,13 @@ app.controller("baseController",function($scope,$sce){
 		}
 		
 	}
+
+
+    deleteId = '';
+    // 更新deleteId：
+    $scope.updateDeleteId = function(id){
+        deleteId = id;
+    }
 	
 	// 定义方法：获取JSON字符串中的某个key对应值的集合
 	$scope.jsonToString = function(jsonStr,key){

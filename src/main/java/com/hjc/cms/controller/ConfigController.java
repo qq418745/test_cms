@@ -2,14 +2,14 @@ package com.hjc.cms.controller;
 
 import com.hjc.cms.bean.DynamicConf;
 import com.hjc.cms.bean.entity.PageResult;
-import com.hjc.cms.dao.ConfRepository;
+import com.hjc.cms.bean.entity.Result;
 import com.hjc.cms.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.stereotype.Controller;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -34,16 +34,15 @@ public class ConfigController extends BaseController {
     }
 
     @RequestMapping("delete")
-    public String deleteConfig(int confId) {
+    public Result deleteConfig(int confId) {
         configService.delete(confId);
-        return null;
+        return new Result(true,"删除成功");
     }
 
     @RequestMapping("save")
-    public String saveConfig(DynamicConf conf) throws Exception {
-
-        configService.update(conf);
+    public Result saveConfig(@RequestBody DynamicConf conf) throws Exception {
+        configService.save(conf);
         //Conf.triggerChangeListeners(conf.getConfName());
-        return null;
+        return  new Result(true,"保存成功");
     }
 }

@@ -27,20 +27,17 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public PageResult findPage(int page, int limit) {
-
-
         Page<DynamicConf> list = confRepository.findAll(PageRequest.of(page-1 ,limit));
-
         return new PageResult(list.getTotalElements(),list.getContent());
     }
 
     @Override
-    public void update(DynamicConf dynamicConf) {
-
+    public void save(DynamicConf dynamicConf) {
+         confRepository.save(dynamicConf);
     }
 
     @Override
     public void delete(int id) {
-
+        confRepository.deleteById(id);
     }
 }
