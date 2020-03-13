@@ -4,6 +4,7 @@ package com.hjc.cms.controller;
 
 import com.hjc.cms.bean.Park;
 import com.hjc.cms.bean.entity.PageResult;
+import com.hjc.cms.bean.entity.Result;
 import com.hjc.cms.service.ParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,21 +63,21 @@ public class ParkController extends BaseController{
 //		}
 //	}
 //
-//	/**
-//	 * 修改
-//	 * @param park
-//	 * @return
-//	 */
-//	@RequestMapping("/update")
-//	public Result update(@RequestBody TbPark park){
-//		try {
-//			parkService.update(park);
-//			return new Result(true, "修改成功");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return new Result(false, "修改失败");
-//		}
-//	}
+	/**
+	 * 保存
+	 * @param park
+	 * @return
+	 */
+	@RequestMapping("save")
+	public Result update(@RequestBody Park park){
+		try {
+			parkService.save(park);
+			return new Result(true, "保存成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "保存失败");
+		}
+	}
 //
 //	/**
 //	 * 获取实体

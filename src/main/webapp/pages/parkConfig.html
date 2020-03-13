@@ -31,7 +31,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item" ng-click="tt()"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">停车场配置</li>
                 </ol>
             </div>
@@ -61,7 +61,7 @@
                             <th>停车场名</th>
                             <th>车场类型</th>
                             <th>广告类型</th>
-                            <th>微信号关注类型</th>
+                            <th>公众号关注类型</th>
                             <th>发票类型</th>
                             <th>默认城市</th>
                             <th>银联无感支付</th>
@@ -80,7 +80,7 @@
                             <td ng-bind-html="ylIndustryCodeType(park)"> </td>
                             <td class="text-center">
 
-                                <button style="margin-left:10px" class="btn btn-success">修改</button>
+                                <button style="margin-left:10px" class="btn btn-success"  data-toggle="modal" data-target="#editModal" ng-click="parkEntiryUpdate(park)">修改</button>
 
 
                             </td>
@@ -99,11 +99,128 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
+
+    <!-- 编辑窗口 -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h3  id="myModalLabel">
+                        {{myModalLabelTitle}}
+                    </h3>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped"  width="800px">
+                        <tr>
+                            <td>车场类型</td>
+                            <td>
+                                <select class="form-control" ng-model="parkEntity.parkConfig.proxyType" ng-options="key as value for (key, value) in proxyTypeArr"></select>
+                        </tr>
+                        <tr>
+                            <td ng-click="tt()">广告类型</td>
+                            <td>
+                                <select class="form-control" ng-model="parkEntity.parkConfig.advSwitch" ng-options="key as value for (key, value) in advTypeArr"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>公众号关注类型</td>
+                            <td>
+                                <select class="form-control" ng-model="parkEntity.parkConfig.followSwitch" ng-options="key as value for (key, value) in weiXinTypeArr"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>发票类型</td>
+                            <td>
+                                <select class="form-control" ng-model="parkEntity.parkConfig.invoiceType" ng-options="key as value for (key, value) in invoiceTypeArr"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>默认城市</td>
+                            <td>
+                                <input type="text"  class="form-control" ng-model="parkEntity.parkConfig.city">
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>银联无感支付</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox"  ng-change="ylIndustryCodeHandle()" ng-model="ylIndustryCodeTypeSwitch"   class="custom-control-input" id="customSwitch3">
+                                        <label class="custom-control-label" for="customSwitch3">无感支付开启 需要配置停车厂无感支付收款账户</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success"  data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- /.content -->
 
 
+
+
+
+<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">无感支付开启</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label   class="col-form-label">无感支付收款账号 </label>
+                        <input ng-model="ylIndustryCode" type="text" class="form-control" >
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal"  ng-click="parkEntity.parkConfig.ylIndustryCode = ylIndustryCode;ylIndustryCodeTypeSwitch=true" ng-disabled="! ylIndustryCode">继续</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">提示信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                确认要关闭吗? 这将会删除无感支付收款账户!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"   data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="parkEntity.parkConfig.ylIndustryCode = null; ylIndustryCode='' ;ylIndustryCodeTypeSwitch=false">继续</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ./wrapper -->
+
+
+
 
 <!-- jQuery -->
 <script src="../plugins/adminLTEPlugins/jquery/jquery.min.js"></script>

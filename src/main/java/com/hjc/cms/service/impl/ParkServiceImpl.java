@@ -1,10 +1,13 @@
 package com.hjc.cms.service.impl;
 
 import com.hjc.cms.bean.Park;
+import com.hjc.cms.bean.ParkConfig;
+import com.hjc.cms.bean.YlConfig;
 import com.hjc.cms.bean.entity.PageResult;
+import com.hjc.cms.dao.ParkConfigRepository;
 import com.hjc.cms.dao.ParkRepository;
+import com.hjc.cms.dao.YlConfigRepository;
 import com.hjc.cms.service.ParkService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -12,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +28,12 @@ public class ParkServiceImpl implements ParkService {
 
     @Autowired
     ParkRepository parkRepository;
+
+    @Autowired
+    YlConfigRepository ylConfigRepository;
+
+    @Autowired
+    ParkConfigRepository parkConfigRepository;
 
 //    /**
 //     * 查询全部
@@ -71,5 +79,26 @@ public class ParkServiceImpl implements ParkService {
 
 
         return new PageResult(list.getTotalElements(),list.getContent());
+    }
+
+    @Override
+    public void save(Park park) {
+
+        YlConfig ylConfig = park.getYlConfig();
+        if (ylConfig != null) {
+            //设置银联支付参数
+            // copy properties from #id=1
+            YlConfig ylOne = ylConfigRepository.findById(1).orElse(null);
+            ylConfig.setMsgSrc(ylOne.getMsgSrc()).setMsgSrcId(ylOne.getMsgSrcId())
+                    .setYlKey(ylOne.getYlKey()).setMsgType(ylOne.getMsgType());
+
+            park.setYlConfig(ylConfigRepository.save(ylConfig));
+        }
+        ParkConfig parkConfig = park.getParkConfig();
+        if (parkConfig != null && park.getParkId().equals(parkConfig.getParkId())) {
+            park.setParkConfig(parkConfigRepository.save(parkConfig));
+        }
+        parkRepository.save(park);
+
     }
 }
