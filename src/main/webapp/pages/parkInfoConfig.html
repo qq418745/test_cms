@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- 分页相关的CSS -->
     <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+    <link rel="stylesheet" href="../css/input.css">
 
 </head>
 <body class="hold-transition sidebar-mini" ng-app="cms" ng-controller="parkController" ng-init="search(1,paginationConf.itemsPerPage)">
@@ -50,7 +51,7 @@
                     <div class="box-tools pull-right">
                         <div class="has-feedback">
 
-                            <button type="button" class="btn btn-secondary btn">新增停车场</button>
+                            <button type="button"    data-toggle="modal" data-target="#sellerModal"  ng-click="newParkDefault()" class="btn btn-secondary btn">新增停车场</button>
 
                         </div>
                     </div>
@@ -81,7 +82,7 @@
                             <td> {{park.freeCount}}</td>
                             <td class="text-center">
 
-                                <button style="margin-left:10px" class="btn btn-success">修改</button>
+                                <button style="margin-left:10px"  ng-click="parkEntiryUpdate(park)"   data-toggle="modal" data-target="#sellerModal"  class="btn btn-success">修改</button>
                                 <button style="margin-left:10px" class="btn btn-success">二维码</button>
                                 <button style="margin-left:10px" class="btn btn-danger">删除</button>
                                 
@@ -113,6 +114,144 @@
 </section>
 <!-- /.content -->
 
+<!-- 商家详情 -->
+<div class="modal fade" id="sellerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">商家详情</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+
+                <ul class="nav nav-tabs wrap">
+                    <li  class="active"><a href="#home" data-toggle="tab">基本信息</a></li>
+                    <li><a href="#parkConf" data-toggle="tab">车场配置</a></li>
+                    <li><a href="#ylPayConf" data-toggle="tab" ng-show="payType === 2;">银联配置</a></li>
+                    <li><a href="#ylConf" data-toggle="tab">无感支付配置</a></li>
+                    <li><a href="#barcodePay" data-toggle="tab">扫码枪配置</a></li>
+                </ul>
+
+                <!-- 选项卡开始 -->
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <br>
+                        <table class="table table-bordered table-striped"  width="800px">
+                            <tr>
+                                <td>停车场ID</td>
+                                <td><input class="form-control" type="text" placeholder="请输入停车场ID" ng-model="parkEntity.parkId"></td>
+                            </tr>
+                            <tr>
+                                <td>支付方式</td>
+                                <td>
+                                    <select class="form-control" ng-model="payType" ng-options="item.v as item.n for item in payTypeArr"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>前端版本</td>
+                                <td>
+                                    <select class="form-control" ng-model="parkEntity.parkConfig.frontVersion" ng-options="item.v as item.n for item in frontVersionArr"></select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="parkConf">
+                        <br>
+                        <table class="table table-bordered table-striped" >
+                            <tr>
+                                <td>车场名称</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.parkName"></td>
+                            </tr>
+                            <tr>
+                                <td>开具发票</td>
+                                <td>
+                                    <select class="form-control" ng-model="parkEntity.parkConfig.invoiceType" ng-options="key as value for (key, value) in invoiceTypeArr"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>广告类型</td>
+                                <td>
+                                    <select class="form-control" ng-model="parkEntity.parkConfig.advSwitch" ng-options="key as value for (key, value) in advTypeArr"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>关注类型</td>
+                                <td>
+                                    <select class="form-control" ng-model="parkEntity.parkConfig.followSwitch" ng-options="key as value for (key, value) in weiXinTypeArr"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>默认城市</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.parkConfig.city"></td>
+                            </tr>
+                            <tr>
+                                <td>超时时间(分)</td>
+                                <td><input class="form-control" type="number" ng-model="parkEntity.parkConfig.duration"></td>
+                            </tr>
+
+                            <tr>
+                                <td>车场类型</td>
+                                <td>
+                                    <select class="form-control" ng-model="parkEntity.parkConfig.proxyType" ng-options="key as value for (key, value) in proxyTypeArr"></select>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="ylPayConf">
+                        <br>
+                        <table class="table table-bordered table-striped" >
+                            <tr>
+                                <td>商户编号</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.ylConfig.mid"></td>
+                            </tr>
+                            <tr>
+                                <td>终端编号</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.ylConfig.tid"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="ylConf">
+                        <br>
+                        <table class="table table-bordered table-striped" >
+                            <tr>
+                                <td>应用商户号</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.parkConfig.ylAppId"></td>
+                            </tr>
+                            <tr>
+                                <td>无感支付商户号</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.parkConfig.ylIndustryCode"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="barcodePay">
+                        <br>
+                        <table class="table table-bordered table-striped" >
+
+                            <tr>
+                                <td>商户编号</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.parkConfig.posMid"></td>
+                            </tr>
+                            <tr>
+                                <td>岗亭-终端号</td>
+                                <td><input class="form-control" type="text" ng-model="parkEntity.parkConfig.posTid"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- 选项卡结束 -->
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true"  ng-click="save()" ng-disabled="! parkEntity.parkId">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- ./wrapper -->
 
@@ -120,13 +259,10 @@
 <script src="../plugins/adminLTEPlugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/adminLTEPlugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="../plugins/adminLTEPlugins/datatables/jquery.dataTables.js"></script>
-<script src="../plugins/adminLTEPlugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="../plugins/adminLTE/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../plugins/adminLTE/js/demo.js"></script>
+
+
 <!-- 引入angular的js -->
 <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
 <!-- 分页插件 -->
@@ -138,7 +274,6 @@
 <script type="text/javascript" src="../js/service/parkService.js"></script>
 <!-- 分页的js -->
 <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
-
 
 </body>
 </html>

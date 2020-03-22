@@ -6,8 +6,9 @@ app.controller('parkController' ,function($scope,$controller,parkService){
     $scope.searchEntity={};//定义搜索对象
 
     $scope.parkList={}; //停车场数据
-    $scope.parkEntity={}; //修改对象
+    $scope.parkEntity={};
     $scope.ylIndustryCodeTypeSwitch= false; //无感支付
+    $scope.payType = 2; //1微信支付宝 2银联
     //搜索
     $scope.search=function(page,rows){
         parkService.search(page,rows,$scope.searchEntity).success(
@@ -56,6 +57,9 @@ app.controller('parkController' ,function($scope,$controller,parkService){
         return park.parkConfig && park.parkConfig.ylIndustryCode ? trustHtml(open) : trustHtml(close);
     };
 
+    $scope.frontVersionArr =  [{n: '老版', v: 1}, {n: '新版', v: 2}];
+    $scope.payTypeArr =   [{n: '公司微信，支付宝', v: 1}, {n: '银联', v: 2}];
+
     var open = '<span style="color: green;">开启</span>';
     var close = '<span style="color: red;">关闭</span>';
 
@@ -89,6 +93,17 @@ app.controller('parkController' ,function($scope,$controller,parkService){
 
 
     $scope.save=function(){
+
+        if (! $scope.payType === 2) {
+            $scope.parkEntity.ylConfig.id=null;
+            $scope.parkEntity.ylConfig.mid=null;
+            $scope.parkEntity.ylConfig.tid=null;
+            $scope.parkEntity.aliConfig.id=1;
+            $scope.parkEntity.wxConfig.id=1;
+        }
+
+         $scope.parkEntity.parkConfig.parkId =$scope.parkEntity.parkId;
+
         parkService.save( $scope.parkEntity).success(function (response) {
             $scope.search(1,$scope.paginationConf.itemsPerPage);
         });
@@ -100,11 +115,39 @@ app.controller('parkController' ,function($scope,$controller,parkService){
 
 
 
+
+  // 弹出框效果
     $(function(){
         $(".wrap li").click(function() {
             $(this).siblings('li').removeClass('active');  // 删除其兄弟元素的样式
             $(this).addClass('active');                    // 为点击元素添加类名
         })});
+
+
+    $scope.newParkDefault= function(){
+
+        var park = {};
+        park.parkConfig = {};
+        //微信关注默认关闭 0
+        park.parkConfig.followSwitch ? park.parkConfig.followSwitch += '' : park.parkConfig.followSwitch = "0";
+        //默认停车场类型
+        park.parkConfig.proxyType  =  park.parkConfig.proxyType ? park.parkConfig.proxyType : 'HJC';
+        //默认发票关闭
+        park.parkConfig.invoiceType = park.parkConfig.invoiceType ? park.parkConfig.invoiceType  : 'NO';
+        park.parkConfig.city =  $scope.cityType(park);
+        //广告默认关闭 0
+        park.parkConfig.advSwitch ? park.parkConfig.advSwitch  += '':  park.parkConfig.advSwitch ="0";
+        //超时时间
+        park.parkConfig.duration = 15;
+        park.parkConfig.ylAppId = 'JSYSTCH';
+        $scope.payType = 2;
+        park.parkConfig.frontVersion = 1;
+        $scope.parkEntity =  park;
+
+    }
+
+
+
 
 
 });

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,5 +68,11 @@ public abstract class BaseController {
         return  isAdmin(user) || StringUtils.isNotBlank(user.getRemark()) ;
     }
 
+
+
+
+    protected ExampleMatcher queryMatcher() {
+        return ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+    }
 
 }
