@@ -5,6 +5,7 @@ package com.hjc.cms.controller;
 
 import com.hjc.cms.bean.User;
 import com.hjc.cms.bean.entity.PageResult;
+import com.hjc.cms.bean.entity.Result;
 import com.hjc.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -38,6 +40,12 @@ public class UserController extends BaseController {
 //        return userLogin();
 //
 //    }
+
+    @RequestMapping("currentUser")
+    public Result userLogin() {
+        return new Result(true,"请求成功").setInfo(currentUser());
+
+    }
 //
 //    @RequestMapping("userLogout")
 //    public String userLogout() {

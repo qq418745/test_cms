@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByName(String name);
 
     List<User> findByManager(int managerId);
+    List<User> findByManagerNotNull();
+    List<User> findByManagerIsNull();
 
     List<User> findByOpenId(String openId);
 }

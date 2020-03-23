@@ -40,15 +40,15 @@ public class User {
     private Integer manager;
     private String fullName;
 
-//    @ManyToOne
-//    @JoinColumn(name = "dept")
-//    private Dept dept;
+    @ManyToOne
+    @JoinColumn(name = "dept")
+    private Dept dept;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "user_id")}
-//            , inverseJoinColumns = {@JoinColumn(name = "role_id")})
-//    @Fetch(FetchMode.SUBSELECT)
-//    private List<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "user_id")}
+            , inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Role> roles;
 
     private String openId;
 }

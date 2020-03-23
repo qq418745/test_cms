@@ -58,8 +58,9 @@
                     <table  class="table table-bordered table-striped table-head-fixed">
                         <thead>
                         <tr>
+                            <th>所属停车场</th>
                             <th>优惠劵名称</th>
-                            <th>商家</th>
+                            <th>派发商家</th>
                             <th>数量</th>
                             <th>时间</th>
 
@@ -67,8 +68,10 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="sellerCoupon  in sellerCouponList">
+
+                            <td>{{sellerCoupon.coupon.park.parkName+"["+ sellerCoupon.coupon.park.parkId+"]"}}</td>
                             <td>{{sellerCoupon.coupon.name}}</td>
-                            <td>{{sellerCoupon.user.fullName}}</td>
+                            <td>{{sellerCoupon.user.fullName ? sellerCoupon.user.fullName : '无'}}</td>
                             <td>{{sellerCoupon.count}}</td>
                             <td>{{sellerCoupon.timeStamp}}</td>
                         </tr>

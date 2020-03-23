@@ -22,7 +22,7 @@ public interface ParkRepository extends JpaRepository<Park, String> {
 //    @Query("update Park a set a.lastUpdate=CURRENT_TIMESTAMP, a.parkName=:parkName, a.proxyState=:proxyState, a.proxyVersion=:proxyVersion, a.freeCount=:freeCount where a.parkId=:parkId")
 //    void updateProxy(String parkName, Short proxyState, Integer freeCount, Integer proxyVersion, String parkId);
 //
-//    List<Park> findByParkIdIn(String[] parkIds);
+    List<Park> findByParkIdIn(String[] parkIds);
 //
 //    List<Park> findByParkNameLike(String parkName);
 
