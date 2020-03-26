@@ -140,10 +140,10 @@
 
                             <a class="nav-link" href="#"  >
                                 <input   id="{{'input'+mod.id}}"   value="{{mod.id}}"  type="checkbox"  ng-click="disposeMods($event,mod.id,1)"/>
-                                <i class="nav-icon fas fa-cog"></i>
+                                <i class="{{mod.addition ?  mod.addition: 'nav-icon fas fa-cog'}}"></i>
                                 <p>
                                     {{mod.name}}
-                                    <i class="fas fa-angle-left right"></i>
+                                    <i  ng-if="idIsModParent(mod.id,mods)"  class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                                 <!-- 第二级 -->
@@ -153,7 +153,7 @@
                                             <i class="nav-icon"></i>
                                         <input  id="{{'input'+mod2.id}}"  name="{{'modBox'+mod.id}}" value="{{mod2.id}}" type="checkbox"   ng-click="disposeMods($event,mod2.id,2,mod.id)"/>
                                             <p>{{mod2.name}}</p>
-                                            <i  ng-repeat="mod3 in mods"   ng-show="mod3.parentId == mod2.id"   class="fas fa-angle-left right"></i>
+                                            <i    ng-if="idIsModParent(mod2.id,mods)"     class="fas fa-angle-left right"></i>
                                         </a>
                                                 <!-- 第三级 -->
                                         <ul   ng-repeat="mod3 in mods"   ng-if="mod3.parentId === mod2.id"   class="nav nav-treeview">
@@ -170,6 +170,18 @@
 
                                 </ul>
 
+                            </li>
+
+                            <li class="nav-header" ng-if="idIsModParent(-1,mods)">服务</li>
+
+                            <li class="nav-item" ng-repeat="mod in mods"  ng-if="mod.parentId === -1">
+                                <a href="#"  class="nav-link">
+                                    <input   id="{{ 'input' + mod.id}}"   value="{{mod.id}}"  type="checkbox"  ng-click="disposeMods($event,mod.id,1)"/>
+                                    <i class="{{mod.addition ?  mod.addition: 'nav-icon fas fa-cog'}}"></i>
+                                    <p>
+                                        {{mod.name}}
+                                    </p>
+                                </a>
                             </li>
 
 

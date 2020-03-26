@@ -2,12 +2,76 @@ app.controller('roleController' ,function($scope,$controller,roleService,userSer
 
     $controller('baseController',{$scope:$scope});//继承
 
+
+
+   /*
+     role 和 index 公有部分
+    */
+    $scope.currentUser={}; //当前用户
+    $scope.mods= new Array(); //当前用户mods
+
+    //查询当前用户
+    $scope.findCurrentUser=function(){
+        userService.findCurrentUser().success(function (response) {
+            if(response.success){
+                $scope.currentUser=response.info;
+                $scope.mods  =  userService.getCurrentUserMods( $scope.currentUser);
+            }
+
+        });
+    };
+    //mod
+    $scope.idIsModParent= function (id , mods) {
+        for (let i = 0; i <mods.length ; i++) {
+            if(mods[i].parentId === id){
+                return  true;
+            }
+        }
+        return  false;
+    }
+    /*
+   role 和 index 公有部分结束
+  */
+
+
     $scope.roleList={}; //集合
     $scope.roleEntity={};
     $scope.roleEntity.mods=[];
-
     $scope.deptId='0'; //公司
 
+
+    //分页查询
+    $scope.search=function(page,rows){
+        roleService.findPage(page,rows).success(function (response) {
+            $scope.roleList=response.rows;
+            $scope.paginationConf.totalItems=response.total;//更新总记录数
+        });
+    };
+
+    $scope.save=function(){
+        //获取所有选中的 modBox
+        getChecked('modBox').split(',').forEach(v=>{
+                let mod = {};
+                mod.id=v;
+                $scope.roleEntity.mods.push(mod);
+            }
+        );
+
+        roleService.save($scope.roleEntity,$scope.deptId).success(function (response) {
+            $scope.search(1,$scope.paginationConf.itemsPerPage);
+        });
+    }
+        $scope.delete=function () {
+            roleService.delete(deleteId).success(function (response) {
+                $scope.search(1,$scope.paginationConf.itemsPerPage);
+            });
+        }
+
+
+
+ /*
+   角色修改  3层复选框部分 开始
+  */
     function seleteCheckbox(flag,id){
         var inputs = document.getElementById('mod'+id).getElementsByTagName("input");
 
@@ -52,34 +116,12 @@ app.controller('roleController' ,function($scope,$controller,roleService,userSer
     }
         var thee =  event.target.checked;
 
-
         //刷新复选框
         setTimeout(function(){
             event.target.checked =thee;
         },50);　　　　//延时0.35秒  设置复选框值 解决复选框bug
     }
 
-    //分页查询
-    $scope.search=function(page,rows){
-        roleService.findPage(page,rows).success(function (response) {
-            $scope.roleList=response.rows;
-            $scope.paginationConf.totalItems=response.total;//更新总记录数
-        });
-    };
-
-    $scope.save=function(){
-        //获取所有选中的 modBox
-         getChecked('modBox').split(',').forEach(v=>{
-             let mod = {};
-             mod.id=v;
-             $scope.roleEntity.mods.push(mod);
-         }
-         );
-
-        roleService.save($scope.roleEntity,$scope.deptId).success(function (response) {
-            $scope.search(1,$scope.paginationConf.itemsPerPage);
-        });
-    }
 
 
     $scope.getModNames = function(mods){
@@ -91,19 +133,6 @@ app.controller('roleController' ,function($scope,$controller,roleService,userSer
         return modNames;
     }
 
-    $scope.currentUser={}; //当前用户
-    $scope.mods= new Array(); //当前用户mods
-
-    //查询当前用户
-    $scope.findCurrentUser=function(){
-        userService.findCurrentUser().success(function (response) {
-            if(response.success){
-                $scope.currentUser=response.info;
-                $scope.mods  =  userService.getCurrentUserMods( $scope.currentUser);
-            }
-
-        });
-    };
 
     /**获取 id sidebar 内 checkbox 被选中的值*/
     function getChecked(){
@@ -130,10 +159,8 @@ app.controller('roleController' ,function($scope,$controller,roleService,userSer
     }
 
 
+    /*
+      角色修改  3层复选框部分 结束
+     */
 
-    $scope.delete=function () {
-         roleService.delete(deleteId).success(function (response) {
-             $scope.search(1,$scope.paginationConf.itemsPerPage);
-         });
-    }
 });
