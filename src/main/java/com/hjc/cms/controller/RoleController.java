@@ -1,36 +1,48 @@
-//package com.hjc.cms.controller;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//import xd.fw.bean.Role;
-//import xd.fw.dao.RoleRepository;
-//import xd.fw.dao.UserRepository;
-//
-//import java.util.List;
-//
-//@Controller
-//@RequestMapping("role")
-//public class RoleController extends BaseController {
-//
-//    @Autowired
-//    RoleRepository roleRepository;
-//    @Autowired
-//    UserRepository userRepository;
-//
+package com.hjc.cms.controller;
+
+
+import com.hjc.cms.bean.Role;
+import com.hjc.cms.bean.entity.PageResult;
+import com.hjc.cms.bean.entity.Result;
+import com.hjc.cms.dao.RoleRepository;
+import com.hjc.cms.dao.UserRepository;
+import com.hjc.cms.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+
+
+
+@RestController
+@RequestMapping("role")
+public class RoleController extends BaseController {
+
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
+
 //    @RequestMapping("obtainUserRoles")
 //    @ResponseBody
 //    public List<Role> obtainUserRoles(int userId) {
 //        return userRepository.findOne(userId).getRoles();
 //    }
-//
-//    @RequestMapping("obtainRoles")
-//    @ResponseBody
-//    public PageContent obtainRoles(int page, int limit) {
-//        return page(roleRepository.findAll(pageRequest(page, limit)));
-//    }
-//
+
+    @RequestMapping("findPage")
+    @ResponseBody
+    public PageResult obtainRoles(int page, int rows) {
+        Page<Role> roles = roleRepository.findAll(pageRequest(page, rows));
+        return new PageResult(roles.getTotalElements(),roles.getContent());
+    }
+
 //    @RequestMapping("deleteRole")
 //    @ResponseBody
 //    public String deleteRole(int[] roleIds) {
@@ -40,10 +52,9 @@
 //        return DONE;
 //    }
 //
-//    @RequestMapping("saveRole")
-//    @ResponseBody
-//    public String saveRole(Role role, int deptId) throws Exception {
-//        userRepositoryCustom.saveRole(role, deptId);
-//        return DONE;
-//    }
-//}
+    @RequestMapping("save")
+    public Result save(@RequestBody Role role, int deptId) throws Exception {
+        userService.saveRole(role, deptId);
+        return  new Result(true,"请求成功");
+    }
+}

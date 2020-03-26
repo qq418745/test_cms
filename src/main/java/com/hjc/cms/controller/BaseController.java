@@ -2,12 +2,16 @@ package com.hjc.cms.controller;
 
 
 import com.hjc.cms.bean.User;
+import com.hjc.cms.bean.entity.PageResult;
 import com.hjc.cms.security.UserDetail;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,4 +79,16 @@ public abstract class BaseController {
         return ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
     }
 
+
+    protected PageRequest pageRequest(int page, int rows) {
+        return  PageRequest.of(page - 1, rows);
+    }
+
+    protected PageRequest pageRequest(int page, int rows, Sort sort) {
+        return new PageRequest(page - 1, rows, sort);
+    }
+
+    protected PageResult page(Page<?> data) {
+        return new PageResult(data.getTotalElements(),data.getContent());
+    }
 }

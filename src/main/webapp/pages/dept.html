@@ -21,19 +21,19 @@
     <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
 
 </head>
-<body class="hold-transition sidebar-mini" ng-app="cms" ng-controller="userController" ng-init="search(1,paginationConf.itemsPerPage)">
+<body class="hold-transition sidebar-mini" ng-app="cms" ng-controller="deptController" ng-init="search(1,paginationConf.itemsPerPage)">
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>用户管理</h1>
+                <h1>部门管理</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">用户管理</li>
+                    <li class="breadcrumb-item active">部门管理</li>
                 </ol>
             </div>
         </div>
@@ -50,9 +50,9 @@
                     <div class="box-tools pull-right">
                         <div class="has-feedback">
 
-                            <button type="button" class="btn btn-secondary btn-lg">新增用户</button>
-                            <button type="button" class="btn btn-secondary btn-lg">部门管理</button>
-                            <button type="button" class="btn btn-secondary btn-lg">角色管理</button>
+<!--                            <button type="button" class="btn btn-secondary btn-lg">新增用户</button>-->
+<!--                            <button type="button" class="btn btn-secondary btn-lg">部门管理</button>-->
+<!--                            <button type="button" class="btn btn-secondary btn-lg">角色管理</button>-->
 
                         </div>
                     </div>
@@ -62,35 +62,26 @@
                         <thead>
                         <tr>
 
-                            <th>用户名</th>
-                            <th>性别</th>
-                            <th>创建时间</th>
-                            <th>手机号码</th>
-                            <th>固定电话</th>
-                            <th>邮箱</th>
-                            <th>部门</th>
+                            <th>部门名</th>
+                            <th>角色</th>
 
-                            <th class="text-center" >操作</th>
+
+<!--                            <th class="text-center" >操作</th>-->
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="user in userList">
-                            <td>{{user.name}}</td>
-                            <td>{{user.sex}}</td>
-                            <td>{{user.entryTime.split("T")[0]}}</td>
-                            <td>{{user.mobile}}</td>
-                            <td>{{user.phone}}</td>
-                            <td>{{user.mail}}</td>
-                            <td>公司</td>
+                        <tr ng-repeat="dept in deptList">
+                            <td>{{dept.name}}</td>
+                            <td>{{getRoles(dept)}}</td>
 
 
 
-                            <td class="text-center">
+<!--                            <td class="text-center">-->
 
-                                <button style="margin-left:10px" class="btn btn-success" >修改</button>
-                                <button style="margin-left:10px" class="btn btn-danger" >删除</button>
+<!--                                <button style="margin-left:10px" class="btn btn-success" >修改</button>-->
+<!--                                <button style="margin-left:10px" class="btn btn-danger" >删除</button>-->
 
-                            </td>
+<!--                            </td>-->
                         </tr>
 
                         </tbody>
@@ -128,9 +119,9 @@
 <script type="text/javascript" src="../plugins/angularjs/angular-sanitize.min.js"></script>
 <!-- 业务js -->
 <script type="text/javascript" src="../js/base.js"></script>
-<script type="text/javascript" src="../js/controller/userController.js"></script>
+<script type="text/javascript" src="../js/controller/deptController.js"></script>
 <script type="text/javascript" src="../js/controller/baseController.js"></script>
-<script type="text/javascript" src="../js/service/userService.js"></script>
+<script type="text/javascript" src="../js/service/deptService.js"></script>
 <!-- 引入分页相关的JS -->
 <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
 </body>

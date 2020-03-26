@@ -97,4 +97,6 @@ app.controller("baseController",function($scope,$sce){
     isBlank = function(v) {
         return (v === null) || (v === undefined) || (v === '') || (Array.isArray(v) && v.length === 0);
     };
+
+
 });
