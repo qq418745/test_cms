@@ -1,5 +1,8 @@
 package com.hjc.cms.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -8,6 +11,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_role")
+@Getter
+@Setter
+@Accessors(chain = true)
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Role")
@@ -21,30 +27,6 @@ public class Role {
             , inverseJoinColumns = {@JoinColumn(name = "mod_id")})
     @Fetch(FetchMode.SELECT)
     private List<Mod> mods;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setMods(List<Mod> mods) {
-        this.mods = mods;
-    }
-
-    public List<Mod> getMods() {
-        return mods;
-    }
 
     @Override
     public boolean equals(Object o) {

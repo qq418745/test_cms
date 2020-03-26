@@ -28,7 +28,7 @@
     <!--&lt;!&ndash; Google Font: Source Sans Pro &ndash;&gt;-->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" ng-app="cms" ng-controller="indexController" ng-init="findCurrentUser()">
 
 <div class="wrapper">
 
@@ -165,7 +165,7 @@
                     <img src="plugins/adminLTE/img/user.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">admin</a>
+                    <a href="#" class="d-block">{{currentUser.name}}</a>
                 </div>
             </div>
 
@@ -176,238 +176,47 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-                    <li class="nav-item">
-                        <a href="./index.html" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <li class="nav-item has-treeview" ng-repeat="mod in mods"  ng-if="mod.parentId === 0" >
+
+                        <a    href="{{mod.url ? mod.url:'#'}}"  ng-if="mod.id <= 1" class="nav-link">
+                            <i class="{{mod.addition ?  mod.addition: 'nav-icon fas fa-cog'}}"></i>
                             <p>
-                                首页
-                                <span class="badge badge-info right">2</span>
+                                {{mod.name}}
+                                <i    ng-if="idIsModParent(mod.id,mods)"  class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cog"></i>
+
+                        <a    href="{{mod.url ? mod.url:'#'}}"  ng-if="mod.id > 1" target="iframe" class="nav-link">
+                            <i class="{{mod.addition ?  mod.addition: 'nav-icon fas fa-cog'}}"></i>
                             <p>
-                                系统配置
-                                <i class="fas fa-angle-left right"></i>
+                                {{mod.name}}
+                                <i    ng-if="idIsModParent(mod.id,mods)"  class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/config.html" target="iframe" class="nav-link">
+                        <ul   ng-repeat="mod2 in mods"   ng-if="mod2.parentId === mod.id"   class="nav nav-treeview">
+                            <li class="nav-item" >
+                                <a href="{{mod2.url ? mod2.url:'#'}}" target="iframe" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>动态参数</p>
-                                </a>
-                            </li>
-                            <!-- target="iframe"-->
-                            <!--<li class="nav-item">-->
-                                <!--<a href="#" class="nav-link">-->
-                                    <!--<i class="far fa-circle nav-icon"></i>-->
-                                    <!--<p>维护</p>-->
-                                <!--</a>-->
-                            <!--</li>-->
-
-                            <li class="nav-item">
-                                <a href="pages/parkQRCode.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>二维码生成</p>
-                                </a>
-                            </li>
-
-                        </ul>
-
-
-
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-car"></i>
-                            <p>
-                                停车管理
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/parkInfoConfig.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>停车场信息</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="pages/parkConfig.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>停车场配置</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="pages/parkCarInfo.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>车辆记录</p>
-                                </a>
-                            </li>
-
-                            <!--<li class="nav-item">-->
-                                <!--<a href="pages/parkUsers.html" target="iframe" class="nav-link">-->
-                                    <!--<i class="far fa-circle nav-icon"></i>-->
-                                    <!--<p>人员管理</p>-->
-                                <!--</a>-->
-                            <!--</li>-->
-                        </ul>
-
-
-                    </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-chart-bar"></i>
-                            <p>
-                                订单信息
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/order.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>订单详情</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/orderReport.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>日月年报</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                            <a href="pages/jyStatement.html"  target="iframe" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>金鹰报表</p>
-                            </a>
-                            </li>
-                        </ul>
-
-
-                    </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="pages/user.html" target="iframe" class="nav-link">
-                            <i class="nav-icon far fa-address-book"></i>
-                            <p>
-                                用户管理
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-bookmark"></i>
-                            <p>
-                                商户中心
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/sellerConter.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>商户中心</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-newspaper"></i>
-                            <p>
-                                优惠劵管理
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/couponConfig.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>优惠劵中心</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/sellerCoupon.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>派发记录</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/couponDispatch.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>优惠劵派发</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#"  target="iframe"  class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>优惠劵使用情况</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" target="iframe"  class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>优惠劵领取详情</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-registered"></i>
-                            <p>
-                                月租车管理
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/carRechargeRecord.html" target="iframe" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>充值记录</p>
+                                    <p>{{mod2.name}}</p>
                                 </a>
                             </li>
 
                         </ul>
                     </li>
 
+                    <li class="nav-header" ng-if="idIsModParent(-1,mods)">服务</li>
 
-                    <li class="nav-header">服务</li>
 
-                        <!--<li class="nav-item">-->
-                            <!--<a href="#" class="nav-link">-->
-                                <!--<i class="nav-icon fas fa-th"></i>-->
-                                <!--<p>-->
-                                    <!--客服服务-->
-                                    <!--<span class="badge badge-info right">2</span>-->
-                                <!--</p>-->
-                            <!--</a>-->
-                        <!--</li>-->
+                    <li class="nav-item" ng-repeat="mod in mods"  ng-if="mod.parentId === -1">
+                        <a href="{{mod.url ? mod.url:'#'}}" target="iframe" class="nav-link">
+                            <i class="{{mod.addition ?  mod.addition: 'nav-icon fas fa-cog'}}"></i>
+                            <p>
+                              {{mod.name}}
+                            </p>
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a href="http://www.huijiuchuan.com" target="iframe" class="nav-link">
-                                <i class="nav-icon fas fa-handshake"></i>
-                                <p>
-                                    技术支持
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://easydoc.xyz/#/doc/24572177/i1s6MbKm"  target="iframe" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    升级日志
-                                </p>
-                            </a>
-                        </li>
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -468,6 +277,16 @@
 
 <!--<script src="plugins/adminLTEPlugins/daterangepicker/daterangepicker.js"></script>-->
 
-
+<!-- 引入angular的js -->
+<script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
+<!-- 分页插件 -->
+<script type="text/javascript" src="plugins/angularjs/angular-sanitize.min.js"></script>
+<!-- 业务的js -->
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/controller/baseController.js"></script>
+<script type="text/javascript" src="js/controller/indexController.js"></script>
+<script type="text/javascript" src="js/service/userService.js"></script>
+<!-- 分页的js -->
+<script type="text/javascript" src="plugins/angularjs/pagination.js"></script>
 </body>
 </html>

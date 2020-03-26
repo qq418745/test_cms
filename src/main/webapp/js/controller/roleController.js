@@ -129,4 +129,11 @@ app.controller('roleController' ,function($scope,$controller,roleService,userSer
         });
     }
 
+
+
+    $scope.delete=function () {
+         roleService.delete(deleteId).success(function (response) {
+             $scope.search(1,$scope.paginationConf.itemsPerPage);
+         });
+    }
 });

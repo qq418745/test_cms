@@ -3,6 +3,7 @@ package com.hjc.cms.controller;
 
 
 
+import com.hjc.cms.bean.Role;
 import com.hjc.cms.bean.User;
 import com.hjc.cms.bean.entity.PageResult;
 import com.hjc.cms.bean.entity.Result;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 
 
 @RestController
@@ -25,6 +27,8 @@ public class UserController extends BaseController {
 
  @Autowired
     UserService userService;
+
+
 //
 //    @Value("${version}")
 //    String version;
@@ -43,8 +47,16 @@ public class UserController extends BaseController {
 
     @RequestMapping("currentUser")
     public Result userLogin() {
-        return new Result(true,"请求成功").setInfo(currentUser());
+        Result result = new Result(true, "请求成功");
 
+        if(isAdmin(currentUser())){
+            ArrayList<Role> roles = new ArrayList<>();
+            roles.add(new Role().setMods(userService.findAllMod()));
+            result.setInfo(currentUser().setRoles( roles) );
+        }else {
+        result.setInfo(currentUser());
+        }
+           return  result;
     }
 //
 //    @RequestMapping("userLogout")

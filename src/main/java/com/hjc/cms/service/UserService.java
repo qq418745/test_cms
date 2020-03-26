@@ -1,9 +1,12 @@
 package com.hjc.cms.service;
 
 
+import com.hjc.cms.bean.Mod;
 import com.hjc.cms.bean.Role;
 import com.hjc.cms.bean.User;
 import com.hjc.cms.bean.entity.PageResult;
+
+import java.util.List;
 
 
 /**
@@ -21,6 +24,8 @@ public interface UserService {
     public  void saveUser(User user) throws Exception;
 
     public  void saveRole(Role role, int deptId) throws Exception;
+
+    public List<Mod> findAllMod();
 
 
 }

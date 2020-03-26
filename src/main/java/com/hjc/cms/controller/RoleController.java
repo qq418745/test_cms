@@ -43,15 +43,13 @@ public class RoleController extends BaseController {
         return new PageResult(roles.getTotalElements(),roles.getContent());
     }
 
-//    @RequestMapping("deleteRole")
-//    @ResponseBody
-//    public String deleteRole(int[] roleIds) {
-//        for (int id : roleIds) {
-//            roleRepository.delete(id);
-//        }
-//        return DONE;
-//    }
-//
+    @RequestMapping("delete")
+    @ResponseBody
+    public Result deleteRole(int id) {
+            roleRepository.deleteById(id);
+        return new Result(true,"请求成功");
+    }
+
     @RequestMapping("save")
     public Result save(@RequestBody Role role, int deptId) throws Exception {
         userService.saveRole(role, deptId);

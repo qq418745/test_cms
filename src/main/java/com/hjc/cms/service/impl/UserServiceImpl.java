@@ -90,4 +90,9 @@ public class UserServiceImpl implements UserService {
         FwUtil.replaceOrAddListItem(dept.getRoles(), record, (t, o) -> t.getId().equals(o.getId()));
         deptRepository.save(dept);
     }
+
+    @Override
+    public List<Mod> findAllMod() {
+       return    modRepository.findAll();
+    }
 }

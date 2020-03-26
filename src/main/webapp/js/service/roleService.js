@@ -9,7 +9,10 @@ app.service('roleService',function($http){
         return $http.post('../role/save?deptId='+deptId,entity,config);
     };
 
-
+    //删除
+    this.delete=function(roleId){
+        return $http.post('../role/delete?id='+roleId,{},config);
+    };
 
     var config = {
         headers: { 'Content-Type': 'application/json' }
